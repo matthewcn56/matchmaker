@@ -18,4 +18,9 @@ export default StyleSheet.create({
     height: 250,
     width: 250,
   },
+
+  input: {
+    alignItems: "center",
+    borderStyle: "solid",
+  }
 });

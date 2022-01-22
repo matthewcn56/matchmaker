@@ -17,7 +17,6 @@ export default function HomeScreen() {
     <View style={styles.container}>
       <Text>Welcome {userName}</Text>
       <Image style={styles.profileImage} source={{ uri: profilePic }} />
-
       <Button onPress={logout} title="Log Out" />
     </View>
   );

@@ -5,6 +5,7 @@ import ExtraScreen from "../screens/ExtraScreen";
 import UserProfileScreen from "../screens/UserProfileScreen";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import CreateProfileScreen from "../screens/CreateProfileScreen.js";
 
 export default function HomeStack() {
   const Tab = createMaterialBottomTabNavigator();
@@ -40,6 +41,20 @@ export default function HomeStack() {
         options={{
           tabBarIcon: ({ color }) => (
             <MaterialIcons name="person" color={color} size={26} />
+          ),
+        }}
+      />
+
+      <Tab.Screen 
+        name="CreateProfile"
+        component={CreateProfileScreen}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="file-question"
+              color={color}
+              size={26}
+            />
           ),
         }}
       />
