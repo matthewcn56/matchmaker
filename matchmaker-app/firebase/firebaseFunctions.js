@@ -3,6 +3,13 @@ import apiKeys from "../config/apiKeys";
 import * as Google from "expo-google-app-auth";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import {
+  getFirestore,
+  collection,
+  doc,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -11,9 +18,10 @@ import "firebase/compat/firestore";
 // Your web app's Firebase configuration
 
 // Initialize Firebase
+//const app = initializeApp(apiKeys.firebaseConfig);
 if (!firebase.apps.length) app = firebase.initializeApp(apiKeys.firebaseConfig);
 else app = firebase.app();
-let db = firebase.firestore();
+let db = getFirestore();
 export { db };
 console.log("Firebase set up!");
 
@@ -84,12 +92,19 @@ function setProfile(result) {
   //     profilePic: result.user.photoURL,
   //     displayName: result.user.displayName,
   //   });
-  db.collection("users").doc(result.user.uid).set({
+  setDoc(doc(db, "users", result.user.uid), {
     uid: result.user.uid,
     profilePic: result.user.photoURL,
     displayName: result.user.displayName,
   });
+  // db.collection("users").doc(result.user.uid).set({
+  //   uid: result.user.uid,
+  //   profilePic: result.user.photoURL,
+  //   displayName: result.user.displayName,
+  // });
 }
+
+function updateProfile(uid) {}
 
 export async function login() {
   try {
