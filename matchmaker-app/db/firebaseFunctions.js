@@ -105,7 +105,7 @@ function setProfile(result) {
   // });
 }
 
-function updateProfile(newInfo) {
+export function updateProfile(newInfo, uid) {
   const profileRef = doc(db, "users", uid);
   updateDoc(profileRef, {
     ...newInfo,

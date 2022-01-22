@@ -1,11 +1,15 @@
-import React, {useReducer} from 'react'
+import React, {useReducer, useContext} from 'react';
 import styles from "../styles.js";
-import {Text, View, TextInput, TouchableOpacity} from 'react-native'
+import { updateProfile } from '../db/firebaseFunctions.js';
+import {Text, View, TextInput, TouchableOpacity} from 'react-native';
+import { AuthContext } from "../navigation/AuthProvider";
+
 export default function CreateProfileScreen(){
     const [userInfo, dispatchUserInfo] = useReducer(
         infoReducer,
         initialInfo
     );
+    const { user, setUser } = useContext(AuthContext);
 
     return(
         <View style={styles.container}>
@@ -14,27 +18,29 @@ export default function CreateProfileScreen(){
             <TextInput
                 placeholder="Name"
                 value={userInfo.name}
-                onChangeText={(event) => dispatchUserInfo({type: "name", body: event})} //reducer is smart enough to know what the previous info is 
-            />
-            <TextInput
-                placeholder="Username"
-            />
-            <TextInput
-                placeholder="Password"
-            />            
+                onChangeText={(event) => dispatchUserInfo({type: "name", body: event})} //reducer is smart enough to know what the previous info is and just use event because it's onChangeText and react-native is weird
+            />    
             <TextInput
                 placeholder="Age"
+                value={userInfo.age}
+                onChangeText={(event) => dispatchUserInfo({type: "age", body: event})}
             />
             <TextInput
                 placeholder="Gender"
+                value={userInfo.gender}
+                onChangeText={(event) => dispatchUserInfo({type: "gender", body: event})}
             />
             <TextInput
                 placeholder="Sexuality"
+                value={userInfo.sexuality}
+                onChangeText={(event) => dispatchUserInfo({type: "sexuality", body: event})}
             />
             <TextInput
                 placeholder="Bio"
+                value={userInfo.bio}
+                onChangeText={(event) => dispatchUserInfo({type: "bio", body: event})}
             />
-            <TouchableOpacity onPress={() => console.log(userInfo)} style={styles.signinButton}>
+            <TouchableOpacity onPress={() => {updateProfile(userInfo, user.uid)}} style={styles.signinButton}>
                 <Text>Create Profile</Text>
             </TouchableOpacity>
         </View>
@@ -50,12 +56,11 @@ export default function CreateProfileScreen(){
 //REDUCER SETUP
 const initialInfo = {
     name: "",
-    username: "", 
-    password: "",
     age: 0,
     gender: "",
     sexuality: "",
-    bio: ""
+    bio: "",
+    ciasux: true
 };
 
 const infoReducer = (prevInfo, action) => {
@@ -66,29 +71,29 @@ const infoReducer = (prevInfo, action) => {
                 name: action.body
             }
         }
-        case "username": {
-            return {
-                ...prevInfo,
-                username: action.body
-            }
-        }
-        case "password": {
-            return {
-                ...prevInfo,
-                password: action.body
-            }
-        }
         case "age":{
-
+            return {
+                ...prevInfo, 
+                age: action.body
+            }
         }
         case "gender":{
-
+            return {
+                ...prevInfo,
+                gender: action.body
+            }
         }
         case "sexuality":{
-
+            return {
+                ...prevInfo, 
+                sexuality: action.body
+            }
         }
         case "bio":{
-
+            return {
+                ...prevInfo, 
+                bio: action.body
+            }
         }
     }
 }
