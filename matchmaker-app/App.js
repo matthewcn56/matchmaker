@@ -15,9 +15,9 @@ import {
   // Poppins_300Light_Italic,
   Poppins_400Regular,
   // Poppins_400Regular_Italic,
-  // Poppins_500Medium,
+  Poppins_500Medium,
   // Poppins_500Medium_Italic,
-  // Poppins_600SemiBold,
+  Poppins_600SemiBold,
   // Poppins_600SemiBold_Italic,
   // Poppins_700Bold,
   // Poppins_700Bold_Italic,
@@ -31,7 +31,9 @@ export default function App() {
 
   const [loaded] = useFonts({
     title: require('./assets/fonts/klarissa.regular.ttf'),
-    Poppins_400Regular
+    Poppins_400Regular,
+    Poppins_600SemiBold,
+    Poppins_500Medium
   });
 
   if (!loaded) {

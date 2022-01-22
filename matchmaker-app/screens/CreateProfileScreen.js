@@ -1,57 +1,69 @@
-import React, {useReducer} from 'react'
-import styles from "../styles.js";
-import {Text, View, TextInput, TouchableOpacity} from 'react-native'
+import React, {useReducer, useState} from 'react'
+import global from "../styles.js";
+import {Text, View, TextInput, TouchableOpacity, StyleSheet, ScrollView} from 'react-native'
+
+// import {Slider} from '@miblanchard/react-native-slider';
+
+
 export default function CreateProfileScreen(){
     const [userInfo, dispatchUserInfo] = useReducer(
         infoReducer,
         initialInfo
     );
 
-    return(
-        <View style={styles.container}>
-            <Text>Welcome to MatchMaker create your profile here</Text>
+    const[age, setAge] = useState(18)
 
+    return(
+        <View style={[global.containerNoCenter, {padding: 50}]}>
+        <ScrollView >
+            <Text style={global.title}>MatchMaker</Text>
+            <Text style={global.text2}>Let's get you set up.</Text>
+            <View style = {styles.inputSection}>
             <TextInput
+                style={global.input}
                 placeholder="Name"
                 value={userInfo.name}
                 onChangeText={(event) => dispatchUserInfo({type: "name", body: event})} //reducer is smart enough to know what the previous info is 
-            />
-            <TextInput
-                placeholder="Username"
-            />
-            <TextInput
-                placeholder="Password"
-            />            
-            <TextInput
+            />      
+            {/* <TextInput
+                style={global.input}
                 placeholder="Age"
-            />
+            /> */}
+            {/* <Slider
+                value={this.state.value}
+                onValueChange={value => this.setState({value})}
+            /> */}
+            {/* <Text>Value: {this.state.value}</Text> */}
             <TextInput
+                style={global.input}
                 placeholder="Gender"
             />
             <TextInput
+                style={global.input}
                 placeholder="Sexuality"
             />
             <TextInput
+                style={global.input}
                 placeholder="Bio"
             />
-            <TouchableOpacity onPress={() => console.log(userInfo)} style={styles.signinButton}>
-                <Text>Create Profile</Text>
+            <TouchableOpacity style={global.button} onPress={() => console.log(userInfo)}>
+                <Text style={global.text}>Let's get started!</Text>
             </TouchableOpacity>
+            </View>
+        </ScrollView>
         </View>
     )
 }
 
-// action 
-// {
-//     type: String, //the type of value that is being changed 
-//     body: String //text of what is typed
-// }
+const styles = StyleSheet.create({
+   inputSection: {
+       marginTop: 20
+   }
+})
 
 //REDUCER SETUP
 const initialInfo = {
     name: "",
-    username: "", 
-    password: "",
     age: 0,
     gender: "",
     sexuality: "",
@@ -64,18 +76,6 @@ const infoReducer = (prevInfo, action) => {
             return {
                 ...prevInfo,
                 name: action.body
-            }
-        }
-        case "username": {
-            return {
-                ...prevInfo,
-                username: action.body
-            }
-        }
-        case "password": {
-            return {
-                ...prevInfo,
-                password: action.body
             }
         }
         case "age":{
