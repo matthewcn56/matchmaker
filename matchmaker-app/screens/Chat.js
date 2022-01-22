@@ -1,17 +1,25 @@
 import React from "react";
 import styles from "../styles.js";
-import { Text, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 
-import PersonSmall from "../components/PersonSmall.js";
+import ChatPerson from "../components/ChatPerson.js";
 
 export default function Chat() {
   return (
-    <View style={styles.container}>
-      <Text>Chat</Text>
-
-      <PersonSmall></PersonSmall>
-      <PersonSmall></PersonSmall>
-      <PersonSmall></PersonSmall>
+    <ScrollView>
+      <View style={styles.containerNoCenter}>
+      <ChatPerson></ChatPerson>
+      <ChatPerson></ChatPerson>
+      <ChatPerson></ChatPerson>
+      <ChatPerson></ChatPerson>
+      <ChatPerson></ChatPerson>
+      <ChatPerson></ChatPerson>
+      <ChatPerson></ChatPerson>
+      <ChatPerson></ChatPerson>
+      <ChatPerson></ChatPerson>
+      <ChatPerson></ChatPerson>
+      
     </View>
+    </ScrollView>
   );
 }

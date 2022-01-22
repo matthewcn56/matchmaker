@@ -19,7 +19,10 @@ export default function HomeStack() {
   const Tab = createMaterialBottomTabNavigator();
   return (
     <View style={{flex: 1}}>
-    <Text style={styles.topLogo}>M</Text>
+    <View style={styles.topLogoContainer}>
+      <Text style={styles.topLogo}>M</Text>
+    </View>
+    
     <Tab.Navigator initialRouteName="Home" barStyle={{ backgroundColor: 'white' }} labeled = {false}>
       <Tab.Screen
         name="UserProfile"
@@ -73,6 +76,17 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: 50,
     marginBottom: 10,
-    fontSize: 45
+    fontSize: 45,
+  },
+  topLogoContainer: {
+    // fontFamily:"title",
+    // color: "#EA393D",
+    // alignSelf: "center",
+    // marginTop: 50,
+    // marginBottom: 10,
+    // fontSize: 45,
+    borderColor: '#EAEAEA',
+    borderStyle:'solid',
+    borderWidth: 0.5
   }
 })

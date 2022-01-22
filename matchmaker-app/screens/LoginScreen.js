@@ -8,8 +8,8 @@ export default function LoginScreen() {
   return (
     <View style={global.container}>
        <Image style={styles.logo} source={require("../assets/Vector.png")} />
-      <TouchableOpacity onPress={() => login()} style={styles.signinButton}>
-        <Text style={styles.signinButtonText}>Sign Up or Log In</Text>
+      <TouchableOpacity onPress={() => login()} style={[global.button, {paddingHorizontal: 60}]}>
+        <Text style={global.text}>Sign Up or Log In</Text>
       </TouchableOpacity>
     </View>
   );
@@ -18,19 +18,5 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
   logo: {
     marginTop: -50
-  },
-  signinButton: {
-    alignItems: "center",
-    borderColor: "#EA393D",
-    borderWidth: 1,
-    borderStyle: "solid",
-    paddingVertical: 10,
-    paddingHorizontal: 60,
-    borderRadius: 50,
-    marginTop: 30
-  },
-  signinButtonText: {
-    color: "#EA393D",
-    fontFamily: "Poppins_400Regular",
   }
 });

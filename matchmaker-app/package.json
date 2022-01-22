@@ -10,7 +10,9 @@
   "dependencies": {
     "@expo-google-fonts/poppins": "^0.2.2",
     "@react-native-community/masked-view": "0.1.10",
+    "@react-native-community/slider": "3.0.3",
     "@react-native-firebase/app": "^14.2.3",
+    "@react-native-picker/picker": "1.9.11",
     "@react-navigation/material-bottom-tabs": "^5.3.15",
     "@react-navigation/native": "^5.9.4",
     "@react-navigation/stack": "^5.14.4",
