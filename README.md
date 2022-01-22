@@ -12,7 +12,7 @@ This template repository was based off of this [guide](https://blog.logrocket.co
 - Set Up Your Google OAuth Clients on The Google Cloud Console
 - Attach Your Google OAuth Clients To The Firebase App
 - Replace ApiKeys with your info as appropriate within `./config/apiKeys.js`
-- `cd quickstarter` and `npm install`
+- `cd app` and `npm install`
 - `expo start` and start making your app!
 
 # What does this app contain?
