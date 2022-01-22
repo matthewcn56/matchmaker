@@ -5,6 +5,7 @@ import {View, Text, StyleSheet} from "react-native";
 import HomeScreen from "../screens/HomeScreen";
 import ExtraScreen from "../screens/ExtraScreen";
 import UserProfileScreen from "../screens/UserProfileScreen";
+import CreateProfileScreen from "../screens/CreateProfileScreen";
 import Chat from "../screens/Chat"
 
 import { Ionicons } from '@expo/vector-icons'; 
@@ -56,6 +57,10 @@ export default function HomeStack() {
           ),
         }}
       /> 
+    <Tab.Screen 
+      name="CreateProfile"
+      component={CreateProfileScreen}
+    />
     </Tab.Navigator>
     </View>
   );
