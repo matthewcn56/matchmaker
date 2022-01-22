@@ -9,10 +9,11 @@ import {
   doc,
   setDoc,
   updateDoc,
+  writeBatch,
 } from "firebase/firestore";
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
-// TODO: Add SDKs for Firebase products that you want to use
+import BatchedBridge from "react-native/Libraries/BatchedBridge/BatchedBridge";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
@@ -43,7 +44,7 @@ const isUserEqual = (googleUser, firebaseUser) => {
 };
 
 const onSignIn = (googleUser) => {
-  console.log("Google Auth Response", googleUser);
+  //console.log("Google Auth Response", googleUser);
   // We need to register an Observer on Firebase Auth to make sure auth is initialized.
   var unsubscribe = firebase.auth().onAuthStateChanged(function (firebaseUser) {
     unsubscribe();
@@ -57,7 +58,7 @@ const onSignIn = (googleUser) => {
       );
 
       // Sign in with credential from the Google user.
-      console.log(credential);
+      //console.log(credential);
       firebase
         .auth()
         .signInWithCredential(credential)
@@ -104,7 +105,31 @@ function setProfile(result) {
   // });
 }
 
-function updateProfile(uid) {}
+function updateProfile(newInfo) {
+  const profileRef = doc(db, "users", uid);
+  updateDoc(profileRef, {
+    ...newInfo,
+    uid: uid,
+  });
+}
+
+export async function addFriend(uid, friendUid) {
+  try {
+    const friendBatch = writeBatch(db);
+    const friendRef = doc(db, "users", uid, "friends", friendUid);
+    friendBatch.set(friendRef, {
+      uid: friendUid,
+    });
+    const complementRef = doc(db, "users", friendUid, "friends", uid);
+    friendBatch.set(complementRef, {
+      uid: uid,
+    });
+    await friendBatch.commit();
+    console.log("Added friend successfully!");
+  } catch (err) {
+    console.error(err);
+  }
+}
 
 export async function login() {
   try {
