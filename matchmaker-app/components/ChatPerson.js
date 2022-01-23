@@ -37,20 +37,22 @@ export default function ChatPerson(props) {
 }
 
 const styles = StyleSheet.create({
-  smallContainer: {
-    flexDirection: "row",
-    flexWrap: "nowrap",
-    paddingVertical: 15,
-    borderBottomColor: "#EAEAEA",
-    borderBottomWidth: 0.5,
-    borderStyle: "solid",
-    height: 100,
-    //   justifyContent:"center"
-  },
-  img: {
-    width: 70,
-    height: 70,
-    borderRadius: 50,
-    marginHorizontal: 15,
-  },
-});
+    smallContainer: {
+      flexDirection:'row',
+      flexWrap: 'nowrap',
+      paddingVertical: 15,
+      borderBottomColor: "#EAEAEA",
+      borderBottomWidth: 0.5,
+      borderStyle: "solid",
+      marginLeft: 15,
+    },
+    img: {
+      width: 70,
+      height: 70,
+      borderRadius: 50,
+      marginRight: 15,
+    },
+    lastMessage: {
+      color: "#BCBCBC", flex: 1, width: 300
+    }
+  });

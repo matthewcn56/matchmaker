@@ -89,6 +89,7 @@ export default function NavigationStack() {
   return (
     <NavigationContainer>
       {user ? <HomeStack /> : <AuthStack />}
+      {/* <HomeStack></HomeStack> */}
     </NavigationContainer>
   );
 }

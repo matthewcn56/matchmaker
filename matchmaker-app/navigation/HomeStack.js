@@ -2,7 +2,7 @@ import React from "react";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { View, Text, StyleSheet } from "react-native";
 import HomeScreen from "../screens/HomeScreen";
-import ExtraScreen from "../screens/ExtraScreen";
+import Swipe from "../screens/Swipe";
 import UserProfileScreen from "../screens/UserProfileScreen";
 import CreateProfileScreen from "../screens/CreateProfileScreen";
 import Chat from "../screens/Chat";

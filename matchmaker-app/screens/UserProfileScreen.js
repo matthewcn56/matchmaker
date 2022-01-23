@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../navigation/AuthProvider";
+import { addFriend } from "../db/firebaseFunctions";
+import { AuthContext } from "../navigation/AuthProvider.js";
 import global from "../styles.js";
 import {
   Text,
