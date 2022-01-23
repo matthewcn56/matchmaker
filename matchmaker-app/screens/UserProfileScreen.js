@@ -129,8 +129,6 @@ export default function UserProfileScreen({ navigation }) {
           >
             <Text style={[global.text, {}]}>Find Friends </Text>
           </TouchableOpacity>
- 
-          {renderPossibleFriends()}
           
         </View>
       </View>

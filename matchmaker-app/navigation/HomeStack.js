@@ -66,7 +66,6 @@ export default function HomeStack() {
             ),
           }}
         />
-        <Tab.Screen name="CreateProfile" component={CreateProfileScreen} />
       </Tab.Navigator>
     </View>
   );
