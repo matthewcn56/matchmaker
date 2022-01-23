@@ -14,6 +14,7 @@ import {
   collection,
   query,
   where,
+  orderBy,
 } from "firebase/firestore";
 import { db } from "../db/firebaseFunctions";
 
@@ -23,7 +24,10 @@ export default function NavigationStack() {
     setUser,
     setFriendUids,
     setIncomingFriendRequestUids,
+    setChatIDs,
     setChats,
+    chats,
+    chatIDs,
     setToSwipe,
   } = useContext(AuthContext);
   const [initializing, setInitializing] = useState(true);
@@ -35,7 +39,7 @@ export default function NavigationStack() {
     if (!user) {
       setFriendUids([]);
       setIncomingFriendRequestUids([]);
-      setChats([]);
+      setChatIDs([]);
       setToSwipe([]);
       return;
     }
@@ -55,14 +59,18 @@ export default function NavigationStack() {
 
     const chatQuery = query(
       collection(db, "chats"),
-      where("users", "array-contains", user.uid)
+      where("participants", "array-contains", user.uid)
     );
     const chatUnsubscribe = onSnapshot(chatQuery, (querySnapshot) => {
       const chatsData = querySnapshot.docs.map((document) => ({
         ...document.data(),
         id: document.id,
       }));
+      //console.log("CHATS DATA");
+      //console.log(chatsData);
+      const newChatIDs = chatsData.map((chat) => chat.id);
       setChats(chatsData);
+      setChatIDs(newChatIDs);
     });
     console.log("set up doc listener for chats");
     return () => {
@@ -76,6 +84,45 @@ export default function NavigationStack() {
       }
     };
   }, [user]);
+
+  //firebase listeners for chatIDs
+  useEffect(() => {
+    console.log("chat fired");
+    console.log(chats.length);
+    if (chatIDs.length < 1) {
+      return;
+    }
+    //handle initial setup
+
+    const chatListeners = chatIDs.map((id) =>
+      onSnapshot(
+        query(collection(db, "chats", id, "messages"), orderBy("date", "asc")),
+        (snapshot) => {
+          console.log(" a message was sent!");
+          const msgData = snapshot.docs.map((document) => document.data());
+          const updatedChats = chats.map((chat) => {
+            console.log("setting an individual");
+            if (chat.id === id) {
+              return {
+                ...chat,
+                messages: msgData,
+              };
+            } else
+              return {
+                ...chat,
+              };
+          });
+          setChats(updatedChats);
+        }
+      )
+    );
+    console.log("Set up listener for individual chat rooms");
+    return () => {
+      if (chatListeners & (chatListeners.length > 0)) {
+        chatListeners.forEach((unsubscribeChat) => unsubscribeChat());
+      }
+    };
+  }, [chatIDs]);
 
   useEffect(() => {
     const subscriber = firebase.auth().onAuthStateChanged(function (user) {
