@@ -7,6 +7,7 @@ export const AuthProvider = ({ children }) => {
   const [incomingFriendRequestUids, setIncomingFriendRequestUids] = useState(
     []
   );
+  const [chats, setChats] = useState([]);
   const [friendUids, setFriendUids] = useState([]);
   return (
     <AuthContext.Provider
@@ -19,6 +20,8 @@ export const AuthProvider = ({ children }) => {
         setIncomingFriendRequestUids,
         friendUids,
         setFriendUids,
+        chats,
+        setChats,
       }}
     >
       {children}
