@@ -116,8 +116,8 @@ export default function UserProfileScreen() {
 
           <TouchableOpacity
             onPress={async () => {
-              setPossibleFriends(await findUsersByName(friendName));
-              setFriendName("");
+              setPossibleFriends(await findUsersByName(searchValue));
+              setSearchValue("");
               setModalVisible(true);
             }}
             title="Find User By Name"
