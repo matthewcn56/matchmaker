@@ -7,7 +7,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 export default function ChatStackScreen() {
     const ChatStack = createStackNavigator();
     return (
-        <ChatStack.Navigator initialRouteName ="ChatHome">
+        <ChatStack.Navigator initialRouteName ="ChatHome" screenOptions={{
+            headerShown: false
+          }}>
             <ChatStack.Screen name="ChatHome" component={Chat}/>
             <ChatStack.Screen name="DM" component={DirectMessage}/>
         </ChatStack.Navigator>

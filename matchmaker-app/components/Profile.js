@@ -18,17 +18,17 @@ const images = [
   require("../assets/Logo.png"),
   require("../assets/temp.png"),
   require("../assets/Logo.png")
-
 ]
 
-export default function Profile() {
+export default function Profile(props) {
   return (
+    
     <View style={styles.container}>
     <SwiperFlatList
       index={0}
       data={images}
       renderItem={({ item }) => {
-        console.log(item)
+        // console.log(item)
         return(
         <View style={[styles.child, { backgroundColor: item }]}>
           {/* <Text style={styles.text}>{item}</Text> */}
@@ -38,16 +38,19 @@ export default function Profile() {
       )}
     }
     />
-    <View style={{margin: 20, flexDirection:'row', flexWrap:'none', justifyContent: 'space-between'}}>
-      <View>
-      <View style={{flexDirection:'row', flexWrap:'wrap'}}>
-        <Text style={global.text2}>Name • 19</Text>
+    <View style={{margin: 20, flexDirection:'row', flexWrap:'none', alignItems: 'center'}}>
+      <View style={{flexShrink: 1, flexBasis: 300}}>
+        <View style={{flexDirection:'row'}}>
+          <Text style={global.text2}>Name • 19</Text>
+        </View>
+        <Text style={global.text3}>why do people have such terrible bios on tinder pls i just want a wife</Text>
       </View>
-      <Text style={global.text3}>why do people have such terrible bios on tinder pls i just want a wife</Text>
-      </View>
-      <TouchableOpacity>
-        <MaterialCommunityIcons name="send-circle" size={24} color="#EA393D" />
+      {
+        !props.swipe &&
+      <TouchableOpacity style={{flexBasis: "auto", flexShrink:1, marginLeft: 20}}>
+        <MaterialCommunityIcons name="send-circle" size={40} color="#EA393D" />
       </TouchableOpacity>
+      }
     </View>
   </View>
   );
@@ -56,28 +59,34 @@ export default function Profile() {
 const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
-  container: { 
-    flex: 1,
+  container: {
+    width: width-40, 
+    // flex: 1,
     backgroundColor: 'white',
     marginTop: 20,
     marginHorizontal: 20,
-    borderRadius: 20,
+    borderRadius: 10,
     shadowColor: '#171717',
     shadowOffset: {width: -2, height: 4},
     shadowOpacity: 0.1,
     shadowRadius: 3,
   },
   child: { 
+    
     width: width-40, 
     justifyContent: 'center', 
-    height: 300},
-  text: { fontSize: 15, textAlign: 'center' },
+    // height: 300
+  },
+  text: { 
+    fontSize: 15, 
+    textAlign: 'center' 
+  },
   img: {
     width: width-40,
     // justifyContent: 'center', 
     height: 300,
     resizeMode: 'cover',
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10
   }
 });

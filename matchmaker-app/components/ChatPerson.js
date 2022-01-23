@@ -3,35 +3,18 @@ import { View, Text, StyleSheet, Image } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import global from "../styles.js";
 import img from "../assets/temp.png";
-
+// onPress={() => {props.press()}
 export default function ChatPerson(props) {
   return (
     <TouchableOpacity onPress={() => {props.press()}}>
-      <View style={styles.smallContainer}>
-        <Image style={styles.img} source={img} />
+    <View style={styles.smallContainer}>
+        <Image style={styles.img} source={require("../assets/temp.png")} />
         <View>
-          <Text
-            numberOfLines={1}
-            style={[
-              global.text2,
-              {
-                fontSize: 20,
-                fontFamily: "Poppins_500Medium",
-                color: "#2F2F2F",
-              },
-            ]}
-          >
-            Name
-          </Text>
-          <Text
-            numberOfLines={1}
-            style={[global.text3, { color: "#BCBCBC", flex: 1 }]}
-          >
-            wow this is a very long message i must really like you or maybe im
-            just using stupid pickup lines
-          </Text>
+            <Text numberOfLines={1} style={[global.text2, {fontSize:20, fontFamily: "Poppins_500Medium", color: "#2F2F2F", flex: 1}]}>Name</Text>
+            <Text numberOfLines={1} style={[global.text3, styles.lastMessage]}>wow this is a very long message i must really like you or maybe im just using stupid pickup lines</Text>
         </View>
-      </View>
+        
+    </View>
     </TouchableOpacity>
   );
 }
