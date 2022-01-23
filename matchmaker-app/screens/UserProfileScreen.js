@@ -1,7 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../navigation/AuthProvider";
 import global from "../styles.js";
-import { Text, View, Image, StyleSheet, ScrollView, TextInput, Button } from "react-native";
+import {
+  Text,
+  View,
+  Image,
+  StyleSheet,
+  ScrollView,
+  TextInput,
+  Button,
+} from "react-native";
 import { addFriend, findUsersByName } from "../db/firebaseFunctions";
 
 import PersonSmall from "../components/FriendRequest";
@@ -15,48 +23,59 @@ export default function UserProfileScreen() {
 
   return (
     <ScrollView>
-    <View style={[global.container, {marginHorizontal: -20, paddingVertical: 20}]}>
-      <View style={styles.profileImageContainer}>
-        <Image
-          style={styles.profileImage}
-          source={{ uri: user.profilePic || user.photoURL }}
-        />
-      </View>
-      
-      <Text style={[global.text2, {fontSize:25, fontFamily: "Poppins_600SemiBold", color: "#2F2F2F"}]}>{String(user.displayName)
-      // .split(' ')[0].toLocaleLowerCase()
-      }</Text>
+      <View
+        style={[
+          global.container,
+          { marginHorizontal: -20, paddingVertical: 20 },
+        ]}
+      >
+        <View style={styles.profileImageContainer}>
+          <Image
+            style={styles.profileImage}
+            source={{ uri: user.profilePic || user.photoURL }}
+          />
+        </View>
 
-      <View style={[styles.buttonSection, {marginTop: 0}]}>
-        <TouchableOpacity onPress={logout} title="Log Out" style={global.button}>
-          <Text style={global.text}>Edit Profile </Text>
-        </TouchableOpacity>
-        <TouchableOpacity title="Edit" style={global.button}>
-           <Text style={[global.text, ]}>Log Out</Text>
-        </TouchableOpacity>
-      </View>
-      
-      <View style={styles.friendSection}>
-        <Text style={[global.text2, {marginVertical: 15}]}>Friend Requests</Text>
-        <PersonSmall></PersonSmall>
-        <PersonSmall></PersonSmall>
-        <PersonSmall></PersonSmall>
-        <PersonSmall></PersonSmall>
-        <Text style={[global.text2, {marginVertical: 15}]}>Find Friends</Text>
+        <View style={[styles.buttonSection, { marginTop: 0 }]}>
+          <TouchableOpacity
+            onPress={logout}
+            title="Log Out"
+            style={global.button}
+          >
+            <Text style={global.text}>Edit Profile </Text>
+          </TouchableOpacity>
+          <TouchableOpacity title="Edit" style={global.button}>
+            <Text style={[global.text]}>Log Out</Text>
+          </TouchableOpacity>
+        </View>
 
-        <TextInput
-          placeholder="Name"
-          onChangeText={(text) => setFriendName(text)}
-          value={friendName}
-        />
+        <View style={styles.friendSection}>
+          <Text style={[global.text2, { marginVertical: 15 }]}>
+            Friend Requests
+          </Text>
+          <PersonSmall></PersonSmall>
+          <PersonSmall></PersonSmall>
+          <PersonSmall></PersonSmall>
+          <PersonSmall></PersonSmall>
+          <Text style={[global.text2, { marginVertical: 15 }]}>
+            Find Friends
+          </Text>
 
-        <Button
-          onPress={async () => {setPossibleFriends(await findUsersByName("albert"))}}
-          title="Find User By Name"
-        />
+          <TextInput
+            placeholder="Name"
+            onChangeText={(text) => setFriendName(text)}
+            value={friendName}
+          />
 
-        {console.log(possibleFriends)}
-        {/* {possibleFriends.map((friend, index) => {
+          <Button
+            onPress={async () => {
+              setPossibleFriends(await findUsersByName("albert"));
+            }}
+            title="Find User By Name"
+          />
+
+          {console.log(possibleFriends)}
+          {/* {possibleFriends.map((friend, index) => {
           return (
             <>
               <Text>{friend.displayName}</Text>
@@ -64,8 +83,8 @@ export default function UserProfileScreen() {
           );
         })} */}
 
-        {/* LEGACY CODE TO MAKE THE FRIEND REQUEST GO THROUGH */}
-        {/* <TextInput
+          {/* LEGACY CODE TO MAKE THE FRIEND REQUEST GO THROUGH */}
+          {/* <TextInput
           placeholder="Friend ID"
           onChangeText={(text) => setFriendID(text)}
           value={friendId}
@@ -74,35 +93,33 @@ export default function UserProfileScreen() {
           onPress={() => addFriend(user.uid, friendId)}
           title="Add Friend!"
         /> */}
+        </View>
       </View>
-    </View>
     </ScrollView>
   );
 }
 
-
 const styles = StyleSheet.create({
   buttonSection: {
-    flexDirection:'row',
-    flexWrap:'wrap',
+    flexDirection: "row",
+    flexWrap: "wrap",
   },
   profileImage: {
     height: 125,
     width: 125,
     borderRadius: 100,
-    margin: 5
+    margin: 5,
   },
   profileImageContainer: {
     borderColor: "#EA393D",
     borderWidth: 5,
     borderStyle: "solid",
     borderRadius: 100,
-    marginBottom: 10
+    marginBottom: 10,
   },
   friendSection: {
     alignItems: "flex-start",
     alignSelf: "stretch",
     paddingHorizontal: 50,
-  }
-
+  },
 });
