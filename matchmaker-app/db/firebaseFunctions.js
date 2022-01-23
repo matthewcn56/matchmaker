@@ -274,7 +274,7 @@ export async function requestMatch(uid, matchUid) {
       } else {
         transaction.update(userRef, {
           matchRequested: arrayUnion(matchUid),
-          toSwipe: arrayUnion(matchUid),
+          toSwipe: arrayRemove(matchUid),
         });
       }
     });
