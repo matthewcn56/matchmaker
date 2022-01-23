@@ -27,7 +27,7 @@ export default function UserProfileScreen() {
   useEffect(()=> {
     const grabPossibleFriends = async() => {
       const possFriends = await getNonFriendedUsers(user.uid, friendUids); //TODO: grab users that are not friended 
-      console.log(possFriends);
+      console.log("UIDS", friendUids);
       setPossibleFriends(possFriends); 
     };
     grabPossibleFriends();   
@@ -38,14 +38,12 @@ export default function UserProfileScreen() {
   ));
 
   const renderPossibleFriends = () => {
-    console.log("Possible Friends Are", possibleFriends);
     let tempPossibleFriends = [...possibleFriends]; //copy possible friends
     if (searchValue !== ""){
       tempPossibleFriends = tempPossibleFriends.filter(
         (friend) => friend.displayName.slice(0, searchValue.length).toLowerCase() === searchValue.toLowerCase() //TODO: add a tolower 
       );
     }
-    console.log(tempPossibleFriends.length)
     return tempPossibleFriends.map((friendObj, index) => 
       <PossibleFriend 
       friend={friendObj} 

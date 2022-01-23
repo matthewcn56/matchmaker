@@ -196,8 +196,8 @@ export async function getNonFriendedUsers(uid, friendUIDs){ //need to pass in th
   const allUsers = await getAllUsers();
   console.log("FRIENDS", friendUIDs);
   const nonFriends = (allUsers.filter(
-    (UID) => !friendUIDs.includes(UID)
-  ));
+    (user) => !friendUIDs.includes(user.uid)));
+  console.log("NONFRIENDS", nonFriends);
   return nonFriends;
 }
 
