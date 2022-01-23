@@ -46,11 +46,13 @@ export default function Swipe() {
   //     grabProfiles();
   //   }
   // }, [toSwipe]);
-  console.log("ALL PROFILES");
-  console.log(allProfiles);
+  // console.log("ALL PROFILES");
+  // console.log(allProfiles);
   let displayedProfile;
-  if (allProfiles)
+  if (allProfiles.length > 0) {
+    console.log("NOW ALL PROFILES", allProfiles);
     displayedProfile = allProfiles[toSwipe.length - 1].props.profile;
+  }
   console.log("DISPLAYED PROFILES", displayedProfile);
   const displayedUid = toSwipe[toSwipe.length - 1];
   return (
