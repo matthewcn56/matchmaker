@@ -7,6 +7,7 @@ export const AuthProvider = ({ children }) => {
   const [incomingFriendRequestUids, setIncomingFriendRequestUids] = useState(
     []
   );
+  const [chatIDs, setChatIDs] = useState([]);
   const [chats, setChats] = useState([]);
   const [friendUids, setFriendUids] = useState([]);
   const [toSwipe, setToSwipe] = useState([]);
@@ -21,6 +22,8 @@ export const AuthProvider = ({ children }) => {
         setIncomingFriendRequestUids,
         friendUids,
         setFriendUids,
+        chatIDs,
+        setChatIDs,
         chats,
         setChats,
         toSwipe,
