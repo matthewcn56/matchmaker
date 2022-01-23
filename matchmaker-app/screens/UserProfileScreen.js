@@ -26,8 +26,7 @@ export default function UserProfileScreen() {
   //set possible friends when first mounted
   useEffect(()=> {
     const grabPossibleFriends = async() => {
-      const possFriends = await getNonFriendedUsers(user.uid, friendUids); //TODO: grab users that are not friended 
-      console.log("UIDS", friendUids);
+      const possFriends = await getNonFriendedUsers(user.uid, friendUids); //TODO: also filter out users who you sent requests to but haven't responded
       setPossibleFriends(possFriends); 
     };
     grabPossibleFriends();   
