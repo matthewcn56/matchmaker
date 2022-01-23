@@ -10,10 +10,6 @@ import {
   Alert, Modal, Pressable
 } from "react-native";
 import {
-  addFriend,
-  findUsersByName,
-  acceptMatch,
-  sendMsg,
   getNonFriendedUsers
 } from "../db/firebaseFunctions";
 import global from "../styles.js";
@@ -28,6 +24,7 @@ export default function FriendModal(props) {
   useEffect(()=> {
     const grabPossibleFriends = async() => {
       const possFriends = await getNonFriendedUsers(user.uid, friendUids); //TODO: also filter out users who you sent requests to but haven't responded
+      // console.log("POSSIBLE FRIENDS ARE: ", possFriends);
       setPossibleFriends(possFriends); 
     };
     grabPossibleFriends();   
