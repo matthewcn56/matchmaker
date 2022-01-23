@@ -15,6 +15,8 @@ import {
   where,
   arrayUnion,
   arrayRemove,
+  runTransaction,
+  Timestamp,
 } from "firebase/firestore";
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
@@ -237,11 +239,32 @@ export async function denyMatch(uid, matchUid) {
   }
 }
 
-// export async function acceptMatch(uid, matchUid) {
-//   try {
+export async function acceptMatch(uid, matchUid) {
+  try {
+    const batch = writeBatch(db);
+    const userRef = doc(db, "users", uid);
+    //remove from swipe
+    batch.update(userRef, {
+      toSwipe: arrayRemove(matchUid),
+    });
 
-//   }
-// }
+    const newChatId = doc(collection(db, "chats"));
+    const newChatRef = doc(db, "chats", newChatId);
+    batch.set(newChatRef, {
+      participants: [uid, matchUid],
+    });
+    const newMsgId = doc(collection(db, "chats", newChatRef, "messages"));
+    const newMsgRef = doc(db, "chats", newChatRef, "messages", newMsgId);
+    batch.set(newMsgRef, {
+      date: Timestamp.now(),
+      text: "I matched with you, let's talk!",
+      from: uid,
+    });
+    await batch.commit();
+  } catch (err) {
+    console.error(err);
+  }
+}
 
 export async function logout() {
   try {
