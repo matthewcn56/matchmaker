@@ -76,7 +76,7 @@ export default function UserProfileScreen() {
       <View
         style={[
           global.container,
-          { marginHorizontal: -20, paddingVertical: 20 },
+          { marginHorizontal: -20, paddingVertical: 20, minHeight: 700, },
         ]}
       >
         <View style={styles.profileImageContainer}>
