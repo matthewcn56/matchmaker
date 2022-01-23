@@ -1,21 +1,16 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-} from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
 import global from "../styles.js";
 
-import { Entypo } from '@expo/vector-icons'; 
+import img from "../assets/temp.png";
+import { Entypo } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
-
 
 export default function FriendRequest() {
   return (
     <View style={styles.smallContainer}>
       <View style={styles.row}>
-        <Image style={styles.img} source={require("../assets/temp.png")} />
+        <Image style={styles.img} source={img} />
         <Text style={global.text3}>Name</Text>
       </View>
       <View style={styles.row}>
@@ -32,20 +27,20 @@ export default function FriendRequest() {
 
 const styles = StyleSheet.create({
   smallContainer: {
-    flexDirection:'row',
-    flexWrap:'wrap',
-    alignItems: 'center',
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignItems: "center",
     justifyContent: "space-between",
     marginVertical: 5,
     paddingLeft: 10,
     borderRadius: 15,
     alignSelf: "stretch",
-    backgroundColor: "#F9F9F9"
+    backgroundColor: "#F9F9F9",
   },
   row: {
-    flexDirection:'row',
-    flexWrap:'wrap',
-    alignItems:'center'
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignItems: "center",
   },
   img: {
     width: 40,
@@ -55,7 +50,6 @@ const styles = StyleSheet.create({
   },
   reqButton: {
     // justifyContent: "flex-end"
-    margin: 10
-  }
-  
+    margin: 10,
+  },
 });

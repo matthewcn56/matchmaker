@@ -12,11 +12,8 @@
     "@react-native-community/masked-view": "0.1.10",
     "@react-native-community/slider": "3.0.3",
     "@react-native-firebase/app": "^14.2.3",
-<<<<<<< HEAD
     "@react-native-picker/picker": "1.9.11",
-=======
     "@react-navigation/bottom-tabs": "^6.0.9",
->>>>>>> chat-stack
     "@react-navigation/material-bottom-tabs": "^5.3.15",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
