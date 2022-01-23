@@ -16,14 +16,21 @@ const colors = ["tomato", "thistle", "skyblue", "teal"];
 
 export default function Profile(props) {
   //hard coded cuz images hard :((
-  const images = [
-    { uri: props.profile.profilePic },
-    require("../assets/temp.png"),
-    //{ uri: props.profile.profilePic },
-    { uri: props.profile.profilePic },
-    require("../assets/temp.png"),
-    //{ uri: props.profile.profilePic },
-  ];
+  const images = props.profile.profilePic
+    ? [
+        { uri: props.profile.profilePic },
+        require("../assets/temp.png"),
+        //{ uri: props.profile.profilePic },
+        { uri: props.profile.profilePic },
+        require("../assets/temp.png"),
+        //{ uri: props.profile.profilePic },
+      ]
+    : [
+        require("../assets/temp.png"),
+        require("../assets/temp.png"),
+        require("../assets/temp.png"),
+        require("../assets/temp.png"),
+      ];
 
   return (
     <View style={styles.container}>
