@@ -21,8 +21,8 @@ export default function PossibleFriend(props) {
                 <View style={styles.smallContainer}>
                     <Image style={styles.img} source={require("../assets/temp.png")} />
                     <View>
-                        <Text numberOfLines={1} style={[global.text3, {marginTop: 10}]}>Name</Text>
-                        {/* <Text numberOfLines={1} style={[global.text3, styles.lastMessage]}>wow this is a very long message i must really like you or maybe im just using stupid pickup lines</Text> */}
+                        <Text numberOfLines={1} style={[global.text3, {marginTop: 10}]}></Text>
+                        <Text>{props.friend.displayName}</Text>
                     </View>
                     
                 </View>

@@ -26,10 +26,8 @@ import PossibleFriend from "../components/PossibleFriend";
 
 export default function UserProfileScreen({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
-
   const { user, logout, friendUids, incomingFriendRequestUids } =
     useContext(AuthContext);
-  // const [friendId, setFriendID] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const [possibleFriends, setPossibleFriends] = useState([]); //array of possible people you can friend
 
@@ -50,7 +48,7 @@ export default function UserProfileScreen({ navigation }) {
     let tempPossibleFriends = [...possibleFriends]; //copy possible friends
     if (searchValue !== ""){
       tempPossibleFriends = tempPossibleFriends.filter(
-        (friend) => friend.displayName.slice(0, searchValue.length).toLowerCase() === searchValue.toLowerCase() //TODO: add a tolower 
+        (friend) => friend.displayName.slice(0, searchValue.length).toLowerCase() === searchValue.toLowerCase() 
       );
     }
     return tempPossibleFriends.map((friendObj, index) => 
@@ -108,15 +106,6 @@ export default function UserProfileScreen({ navigation }) {
             Friend Requests
           </Text>
           {displayedFriendRequests}
-          {/* <Text style={[global.text2, { marginVertical: 15 }]}>
-            Find Friends
-          </Text>
-
-          <TextInput
-            placeholder="Search Name"
-            onChangeText={(text) => setFriendName(text)}
-            value={friendName}
-          /> */}
 
           <TouchableOpacity
             onPress={async () => {
