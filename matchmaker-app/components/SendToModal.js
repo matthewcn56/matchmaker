@@ -45,6 +45,8 @@ export default function FriendModal(props) {
     return tempFriends.map((friendObj, index) => (
       <Friend
         setModalVisible={props.setModalVisible}
+        chosenId={props.chosenId}
+        setChosenId={props.setChosenId}
         friend={friendObj}
         onAccept={() => {
           let newFriends = [

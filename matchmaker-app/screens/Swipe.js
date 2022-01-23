@@ -17,29 +17,30 @@ export default function Swipe() {
   return (
     <View style={[global.container, { paddingVertical: 50 }]}>
       {/* <Text>swipe on your ships</Text> */}
-      {toSwipe.length != 0 ? 
-        displayedProfile : 
+      {toSwipe.length != 0 ? (
+        displayedProfile
+      ) : (
         <Text style={global.text}>No more profiles!</Text>
-      }
-      {toSwipe.length != 0 &&
-      <View style={[styles.row, { marginTop: 20 }]}>
-        <TouchableOpacity
-          style={styles.reqButton}
-          onPress={() => {
-            denyMatch(user.uid, displayedUid);
-          }}
-        >
-          <Entypo name="cross" size={60} color="#EA393D" />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            requestMatch(user.uid, displayedUid);
-          }}
-        >
-          <Entypo name="check" size={55} color="#2F2F2F" />
-        </TouchableOpacity>
-      </View>
-}
+      )}
+      {toSwipe.length != 0 && (
+        <View style={[styles.row, { marginTop: 20 }]}>
+          <TouchableOpacity
+            style={styles.reqButton}
+            onPress={() => {
+              denyMatch(user.uid, displayedUid);
+            }}
+          >
+            <Entypo name="cross" size={60} color="#EA393D" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              requestMatch(user.uid, displayedUid);
+            }}
+          >
+            <Entypo name="check" size={55} color="#2F2F2F" />
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 }

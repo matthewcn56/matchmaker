@@ -4,6 +4,7 @@ import { AuthContext } from "../navigation/AuthProvider";
 import { sendFriendRequest } from "../db/firebaseFunctions";
 import { Entypo } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { recommendMatch } from "../db/firebaseFunctions";
 
 import global from "../styles";
 
@@ -13,7 +14,9 @@ export default function Friend(props) {
   return (
     <>
       <TouchableOpacity
-        onPress={() => {
+        onPress={async () => {
+          await recommendMatch(props.friend.uid, props.chosenId);
+
           props.setModalVisible(false);
         }}
       >

@@ -62,7 +62,10 @@ export default function Profile(props) {
         {!props.swipe && (
           <TouchableOpacity
             style={{ flexBasis: "auto", flexShrink: 1, marginLeft: 20 }}
-            onPress={() => props.setModalVisible(true)}
+            onPress={() => {
+              props.setModalVisible(true);
+              props.setChosenId(props.profile.uid);
+            }}
           >
             <MaterialCommunityIcons
               name="send-circle"

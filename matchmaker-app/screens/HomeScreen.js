@@ -19,6 +19,7 @@ import SendToModal from "../components/SendToModal";
 
 export default function HomeScreen() {
   const [allProfiles, setAllProfiles] = useState([]);
+  const [chosenId, setChosenId] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   useEffect(() => {
     const profilesUnsubscribe = onSnapshot(
@@ -37,6 +38,8 @@ export default function HomeScreen() {
       setModalVisible={setModalVisible}
       key={profile.uid}
       profile={profile}
+      chosenId={chosenId}
+      setChosenId={setChosenId}
     />
   ));
   return (
@@ -44,6 +47,8 @@ export default function HomeScreen() {
       <SendToModal
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
+        chosenId={chosenId}
+        setChosenId={setChosenId}
       ></SendToModal>
       <View
         style={{
