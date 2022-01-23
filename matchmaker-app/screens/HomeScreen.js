@@ -4,9 +4,6 @@ import Profile from "../components/Profile";
 import { Text, View, Button, Image, TextInput, ScrollView } from "react-native";
 
 export default function HomeScreen() {
-  // const { user, logout } = useContext(AuthContext);
-  // const [friendId, setFriendID] = useState("");
-
   return (
     <ScrollView>
       <View style={{
@@ -14,9 +11,9 @@ export default function HomeScreen() {
       backgroundColor: 'white',
       alignItems: "center",
       }}>
-      <Profile></Profile>
-      <Profile></Profile>
-      <Profile></Profile>
+      <Profile swipe={false}></Profile>
+      <Profile swipe={false}></Profile>
+      <Profile swipe={false}></Profile>
     </View>
     </ScrollView>
   );

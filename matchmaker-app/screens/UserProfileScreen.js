@@ -4,7 +4,7 @@ import { AuthContext } from "../navigation/AuthProvider.js";
 import global from "../styles.js";
 import { Text, View, Image, StyleSheet, ScrollView, TextInput, Button } from "react-native";
 
-import PersonSmall from "../components/FriendRequest";
+import FriendRequest from "../components/FriendRequest";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function UserProfileScreen() {
@@ -35,10 +35,10 @@ export default function UserProfileScreen() {
       
       <View style={styles.friendSection}>
         <Text style={[global.text2, {marginVertical: 15}]}>Friend Requests</Text>
-        <PersonSmall></PersonSmall>
-        <PersonSmall></PersonSmall>
-        <PersonSmall></PersonSmall>
-        <PersonSmall></PersonSmall>
+        <FriendRequest></FriendRequest>
+        <FriendRequest></FriendRequest>
+        <FriendRequest></FriendRequest>
+        <FriendRequest></FriendRequest>
         <Text style={[global.text2, {marginVertical: 15}]}>Find Friends</Text>
         <TextInput
         style={global.input}
