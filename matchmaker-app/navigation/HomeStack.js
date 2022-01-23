@@ -50,7 +50,7 @@ export default function HomeStack() {
         />
         <Tab.Screen
           name="Extra"
-          component={ExtraScreen}
+          component={Swipe}
           options={{
             tabBarIcon: () => (
               <FontAwesome name="heart" color={"#EA393D"} size={24} />
