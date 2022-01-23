@@ -216,6 +216,33 @@ export async function sendFriendRequest(uid, friendUid) {
   }
 }
 
+export async function recommendMatch(friendUid, recommendeeUID) {
+  try {
+    await updateDoc(doc(db, "users", friendUid), {
+      toSwipe: arrayUnion(recommendeeUID),
+    });
+    alert("Recommended to friend!");
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+export async function denyMatch(uid, matchUid) {
+  try {
+    await updateDoc(doc(db, "users", uid), {
+      toSwipe: arrayRemove(matchUid),
+    });
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+// export async function acceptMatch(uid, matchUid) {
+//   try {
+
+//   }
+// }
+
 export async function logout() {
   try {
     firebase.auth().signOut();
