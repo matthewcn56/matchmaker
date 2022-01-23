@@ -43,7 +43,5 @@ Our frontend was built as a React Native mobile app using Expo, capable of runni
 * Matt: "My challenge and accomplishment are the same: the chat feature. It was a lot of work to implement, but I'm proud that I got it working!"
 * Edmond: "It was challenging to figure out JS syntax and debugging issues. But, it was nice to feel my React skills improve over the last two days. I went from not knowing anything at all to being able to solve problems on my own."
 
-## What we learned
-
 ## What's next
 The MatchMaker team is excited to see where this project goes in the future! Some features we would like to implement in the future include a more sophisticated feed algorithm/friend suggestion algorithm, more dynamic UI, more information on a person's profile (such as hobbies, stickers, and job), and report features in the chat.
