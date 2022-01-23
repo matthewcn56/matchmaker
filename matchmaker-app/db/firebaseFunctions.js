@@ -152,7 +152,19 @@ export async function acceptFriendRequest(uid, incomingUid) {
       friends: arrayUnion(uid),
     });
     await friendBatch.commit();
-    alert("Friend request sent successfully!");
+    alert("Friend request accepted!");
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+export async function denyFriendRequest(uid, incomingUid) {
+  try {
+    const selfRef = doc(db, "users", uid);
+    await updateDoc(selfRef, {
+      friendRequests: arrayRemove(incomingUid),
+    });
+    alert("Friend request denied!");
   } catch (err) {
     console.error(err);
   }
@@ -164,7 +176,7 @@ export async function findUsersByName(name) {
   try {
     const snapshot = await getDocs(q);
     //console.log(snapshot.docs);
-    const users = snapshot.docs.map(doc => doc.data());
+    const users = snapshot.docs.map((doc) => doc.data());
     console.log("Users is: ", users); //debug
     return users;
   } catch (e) {
@@ -203,6 +215,33 @@ export async function sendFriendRequest(uid, friendUid) {
     console.error("Error sending fr", err);
   }
 }
+
+export async function recommendMatch(friendUid, recommendeeUID) {
+  try {
+    await updateDoc(doc(db, "users", friendUid), {
+      toSwipe: arrayUnion(recommendeeUID),
+    });
+    alert("Recommended to friend!");
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+export async function denyMatch(uid, matchUid) {
+  try {
+    await updateDoc(doc(db, "users", uid), {
+      toSwipe: arrayRemove(matchUid),
+    });
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+// export async function acceptMatch(uid, matchUid) {
+//   try {
+
+//   }
+// }
 
 export async function logout() {
   try {

@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import global from "../styles.js";
-
+import { AuthContext } from "../navigation/AuthProvider.js";
 import img from "../assets/temp.png";
 import { Entypo } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import {
+  acceptFriendRequest,
+  denyFriendRequest,
+} from "../db/firebaseFunctions.js";
 
 export default function FriendRequest(props) {
+  const { user } = useContext(AuthContext);
   return (
     <View style={styles.smallContainer}>
       <View style={styles.row}>
@@ -14,10 +19,15 @@ export default function FriendRequest(props) {
         <Text style={global.text3}>{props.uid}</Text>
       </View>
       <View style={styles.row}>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => acceptFriendRequest(user.uid, props.uid)}
+        >
           <Entypo name="check" size={25} color="#2F2F2F" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.reqButton}>
+        <TouchableOpacity
+          style={styles.reqButton}
+          onPress={() => denyFriendRequest(user.uid, props.uid)}
+        >
           <Entypo name="cross" size={30} color="#EA393D" />
         </TouchableOpacity>
       </View>

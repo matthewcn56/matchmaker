@@ -7,21 +7,34 @@ import { AuthContext } from "./AuthProvider";
 import { ActivityIndicator } from "react-native";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
-import { getDoc, doc, onSnapshot, collection } from "firebase/firestore";
+import {
+  getDoc,
+  doc,
+  onSnapshot,
+  collection,
+  query,
+  where,
+} from "firebase/firestore";
 import { db } from "../db/firebaseFunctions";
 
 export default function NavigationStack() {
-  const { user, setUser, setFriendUids, setIncomingFriendRequestUids } =
-    useContext(AuthContext);
+  const {
+    user,
+    setUser,
+    setFriendUids,
+    setIncomingFriendRequestUids,
+    setChats,
+  } = useContext(AuthContext);
   const [initializing, setInitializing] = useState(true);
   const [loading, setLoading] = useState(true);
 
-  //set up firebase listener for user doc if exists
+  //set up firebase listener for user doc if exists, and firebase listener for chats if user exists
   useEffect(() => {
     //do nothing if no user
     if (!user) {
       setFriendUids([]);
       setIncomingFriendRequestUids([]);
+      setChats([]);
       return;
     }
     const userUnsubscribe = onSnapshot(
@@ -34,10 +47,27 @@ export default function NavigationStack() {
         setIncomingFriendRequestUids(friendRequestData);
       }
     );
-    console.log("set up doc listener!");
+    console.log("set up doc listener for user!");
+
+    const chatQuery = query(
+      collection(db, "chats"),
+      where("users", "array-contains", user.uid)
+    );
+    const chatUnsubscribe = onSnapshot(chatQuery, (querySnapshot) => {
+      const chatsData = querySnapshot.docs.map((document) => ({
+        ...document.data(),
+        id: document.id,
+      }));
+      setChats(chatsData);
+    });
+    console.log("set up doc listener for chats");
     return () => {
       if (userUnsubscribe) {
-        console.log("Detaching listener");
+        console.log("Detaching listener to user");
+        userUnsubscribe();
+      }
+      if (chatUnsubscribe) {
+        console.log("Detaching listener to chats");
         userUnsubscribe();
       }
     };

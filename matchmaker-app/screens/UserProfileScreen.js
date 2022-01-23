@@ -24,7 +24,7 @@ export default function UserProfileScreen() {
   const [possibleFriends, setPossibleFriends] = useState([]); //array of possible people you can friend
 
   const displayedFriendRequests = incomingFriendRequestUids.map((uid) => (
-    <PersonSmall uid={uid} />
+    <PersonSmall uid={uid} key={uid} />
   ));
   possibleFriends.forEach((friend) => console.log(friend));
   return (
@@ -63,7 +63,7 @@ export default function UserProfileScreen() {
           <Text style={[global.text2, { marginVertical: 15 }]}>
             Find Friends
           </Text>
-          
+
           <TextInput
             placeholder="Search Name"
             onChangeText={(text) => setFriendName(text)}
@@ -71,7 +71,10 @@ export default function UserProfileScreen() {
           />
 
           <Button
-            onPress={async () => {setPossibleFriends(await findUsersByName(friendName)); setFriendName("");}}
+            onPress={async () => {
+              setPossibleFriends(await findUsersByName(friendName));
+              setFriendName("");
+            }}
             title="Find User By Name"
           />
 
@@ -79,7 +82,7 @@ export default function UserProfileScreen() {
           {possibleFriends.map((friendObj, index) => {
             return (
               <>
-                <PossibleFriend friend={friendObj}/>
+                <PossibleFriend friend={friendObj} />
               </>
             );
           })}
