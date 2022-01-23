@@ -17,7 +17,11 @@ export default function Swipe() {
   return (
     <View style={[global.container, { paddingVertical: 50 }]}>
       {/* <Text>swipe on your ships</Text> */}
-      {displayedProfile}
+      {toSwipe.length != 0 ? 
+        displayedProfile : 
+        <Text style={global.text}>No more profiles!</Text>
+      }
+      {toSwipe.length != 0 &&
       <View style={[styles.row, { marginTop: 20 }]}>
         <TouchableOpacity
           style={styles.reqButton}
@@ -35,6 +39,7 @@ export default function Swipe() {
           <Entypo name="check" size={55} color="#2F2F2F" />
         </TouchableOpacity>
       </View>
+}
     </View>
   );
 }
