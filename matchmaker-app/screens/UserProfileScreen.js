@@ -10,7 +10,12 @@ import {
   TextInput,
   Button,
 } from "react-native";
-import { addFriend, findUsersByName } from "../db/firebaseFunctions";
+import {
+  addFriend,
+  findUsersByName,
+  acceptMatch,
+  sendMsg,
+} from "../db/firebaseFunctions";
 
 import PersonSmall from "../components/FriendRequest";
 import { TouchableOpacity } from "react-native-gesture-handler";

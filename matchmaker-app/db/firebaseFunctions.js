@@ -17,6 +17,7 @@ import {
   arrayRemove,
   runTransaction,
   Timestamp,
+  addDoc,
 } from "firebase/firestore";
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
@@ -248,19 +249,30 @@ export async function acceptMatch(uid, matchUid) {
       toSwipe: arrayRemove(matchUid),
     });
 
-    const newChatId = doc(collection(db, "chats"));
-    const newChatRef = doc(db, "chats", newChatId);
+    const newChatRef = doc(collection(db, "chats"));
     batch.set(newChatRef, {
       participants: [uid, matchUid],
     });
-    const newMsgId = doc(collection(db, "chats", newChatRef, "messages"));
-    const newMsgRef = doc(db, "chats", newChatRef, "messages", newMsgId);
+    const newMsgRef = doc(collection(newChatRef, "messages"));
     batch.set(newMsgRef, {
       date: Timestamp.now(),
       text: "I matched with you, let's talk!",
       from: uid,
     });
     await batch.commit();
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+export async function sendMsg(msg, uid, chatID) {
+  try {
+    const chatRef = doc(db, "chats", chatID);
+    const newMsgRef = await addDoc(collection(chatRef, "messages"), {
+      date: Timestamp.now(),
+      text: msg,
+      from: uid,
+    });
   } catch (err) {
     console.error(err);
   }
