@@ -18,6 +18,7 @@ import {
   runTransaction,
   Timestamp,
   addDoc,
+  getDoc,
 } from "firebase/firestore";
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
@@ -275,6 +276,23 @@ export async function sendMsg(msg, uid, chatID) {
     });
   } catch (err) {
     console.error(err);
+  }
+}
+
+export async function getAllFriends(uid) {
+  const userRef = doc(db, "users", uid);
+  const userSnap = await getDoc(userRef);
+  const userData = userSnap.data();
+  return userData.friends ?? [];
+}
+
+export async function getUserProfile(uid) {
+  const userRef = doc(db, "users", uid);
+  const userSnap = await getDoc(userRef);
+  if (userSnap.exists()) {
+    return userSnap.data();
+  } else {
+    alert("User doesn't exist!");
   }
 }
 
