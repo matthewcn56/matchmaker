@@ -24,7 +24,7 @@ import PersonSmall from "../components/FriendRequest";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import PossibleFriend from "../components/PossibleFriend";
 
-export default function UserProfileScreen() {
+export default function UserProfileScreen({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
 
   const { user, logout, friendUids, incomingFriendRequestUids } =
@@ -88,13 +88,17 @@ export default function UserProfileScreen() {
 
         <View style={[styles.buttonSection, { marginTop: 0 }]}>
           <TouchableOpacity
-            onPress={logout}
-            title="Log Out"
+            title="Edit"
             style={global.button}
+            onPress={ () => navigation.navigate('CreateProfile')}
           >
             <Text style={global.text}>Edit Profile </Text>
           </TouchableOpacity>
-          <TouchableOpacity title="Edit" style={global.button}>
+
+          <TouchableOpacity 
+            title="Log Out" 
+            style={global.button} 
+            onPress={logout}>
             <Text style={[global.text]}>Log Out</Text>
           </TouchableOpacity>
         </View>
