@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../navigation/AuthProvider";
+import { addFriend } from "../db/firebaseFunctions";
+import { AuthContext } from "../navigation/AuthProvider.js";
 import global from "../styles.js";
-import { Text, View, Image, StyleSheet, ScrollView } from "react-native";
+import { Text, View, Image, StyleSheet, ScrollView, TextInput, Button } from "react-native";
 
 import PersonSmall from "../components/FriendRequest";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function UserProfileScreen() {
   const { user, logout } = useContext(AuthContext);
+  const [friendId, setFriendID] = useState("");
   return (
     <ScrollView>
     <View style={[global.container, {marginHorizontal: -20, paddingVertical: 20}]}>
@@ -38,6 +40,16 @@ export default function UserProfileScreen() {
         <PersonSmall></PersonSmall>
         <PersonSmall></PersonSmall>
         <Text style={[global.text2, {marginVertical: 15}]}>Find Friends</Text>
+        <TextInput
+        style={global.input}
+        placeholder="Friend ID"
+        onChangeText={(text) => setFriendID(text)}
+        value={friendId}
+        />
+        <Button
+          onPress={() => addFriend(user.uid, friendId)}
+          title="Add Friend!"
+        />
       </View>
     </View>
     </ScrollView>
