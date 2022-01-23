@@ -16,12 +16,15 @@ import {
   acceptMatch,
   sendMsg,
 } from "../db/firebaseFunctions";
+import FriendModal from "../components/FriendModal.js";
 
 import PersonSmall from "../components/FriendRequest";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import PossibleFriend from "../components/PossibleFriend";
 
 export default function UserProfileScreen() {
+  const [modalVisible, setModalVisible] = useState(false);
+
   const { user, logout, friendUids, incomingFriendRequestUids } =
     useContext(AuthContext);
   const [friendId, setFriendID] = useState("");
@@ -34,6 +37,10 @@ export default function UserProfileScreen() {
   possibleFriends.forEach((friend) => console.log(friend));
   return (
     <ScrollView>
+      <FriendModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+      ></FriendModal>
       <View
         style={[
           global.container,
@@ -65,7 +72,7 @@ export default function UserProfileScreen() {
             Friend Requests
           </Text>
           {displayedFriendRequests}
-          <Text style={[global.text2, { marginVertical: 15 }]}>
+          {/* <Text style={[global.text2, { marginVertical: 15 }]}>
             Find Friends
           </Text>
 
@@ -73,15 +80,19 @@ export default function UserProfileScreen() {
             placeholder="Search Name"
             onChangeText={(text) => setFriendName(text)}
             value={friendName}
-          />
+          /> */}
 
-          <Button
+          <TouchableOpacity
             onPress={async () => {
               setPossibleFriends(await findUsersByName(friendName));
               setFriendName("");
+              setModalVisible(true);
             }}
             title="Find User By Name"
-          />
+            style={global.button}
+          >
+            <Text style={[global.text, {}]}>Find Friends </Text>
+          </TouchableOpacity>
 
           {/* {console.log(possibleFriends)} */}
           {possibleFriends.map((friendObj, index) => {

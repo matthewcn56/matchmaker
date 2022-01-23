@@ -9,6 +9,7 @@ export const AuthProvider = ({ children }) => {
   );
   const [chats, setChats] = useState([]);
   const [friendUids, setFriendUids] = useState([]);
+  const [toSwipe, setToSwipe] = useState([]);
   return (
     <AuthContext.Provider
       value={{
@@ -22,6 +23,8 @@ export const AuthProvider = ({ children }) => {
         setFriendUids,
         chats,
         setChats,
+        toSwipe,
+        setToSwipe,
       }}
     >
       {children}

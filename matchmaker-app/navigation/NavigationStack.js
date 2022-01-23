@@ -24,17 +24,19 @@ export default function NavigationStack() {
     setFriendUids,
     setIncomingFriendRequestUids,
     setChats,
+    setToSwipe,
   } = useContext(AuthContext);
   const [initializing, setInitializing] = useState(true);
   const [loading, setLoading] = useState(true);
 
   //set up firebase listener for user doc if exists, and firebase listener for chats if user exists
   useEffect(() => {
-    //do nothing if no user
+    //make empty once again if no user
     if (!user) {
       setFriendUids([]);
       setIncomingFriendRequestUids([]);
       setChats([]);
+      setToSwipe([]);
       return;
     }
     const userUnsubscribe = onSnapshot(
@@ -43,8 +45,10 @@ export default function NavigationStack() {
         const userDocData = userDocument.data();
         const friendDocData = userDocData.friends ?? [];
         const friendRequestData = userDocData.friendRequests ?? [];
+        const toSwipeData = userDocData.toSwipe ?? [];
         setFriendUids(friendDocData);
         setIncomingFriendRequestUids(friendRequestData);
+        setToSwipe(toSwipeData);
       }
     );
     console.log("set up doc listener for user!");
