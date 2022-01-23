@@ -11,6 +11,8 @@ export default function UserProfileScreen() {
   const { user, logout } = useContext(AuthContext);
   const [friendId, setFriendID] = useState("");
   const [friendName, setFriendName] = useState("");
+  const [possibleFriends, setPossibleFriends] = useState([]); //array of possible people you can friend
+
   return (
     <ScrollView>
     <View style={[global.container, {marginHorizontal: -20, paddingVertical: 20}]}>
@@ -41,25 +43,37 @@ export default function UserProfileScreen() {
         <PersonSmall></PersonSmall>
         <PersonSmall></PersonSmall>
         <Text style={[global.text2, {marginVertical: 15}]}>Find Friends</Text>
-      {/* <TextInput
-        placeholder="Friend ID"
-        onChangeText={(text) => setFriendID(text)}
-        value={friendId}
-      />
-      <Button
-        onPress={() => addFriend(user.uid, friendId)}
-        title="Add Friend!"
-      /> */}
 
-      <TextInput
-        placeholder="Name"
-        onChangeText={(text) => setFriendName(text)}
-        value={friendName}
-      />
-      <Button
-        onPress={() => {findUsersByName("albert")}}
-        title="Find User By Name I am "
-      />
+        <TextInput
+          placeholder="Name"
+          onChangeText={(text) => setFriendName(text)}
+          value={friendName}
+        />
+
+        <Button
+          onPress={async () => {setPossibleFriends(await findUsersByName("albert"))}}
+          title="Find User By Name"
+        />
+
+        {console.log(possibleFriends)}
+        {/* {possibleFriends.map((friend, index) => {
+          return (
+            <>
+              <Text>{friend.displayName}</Text>
+            </>
+          );
+        })} */}
+
+        {/* LEGACY CODE TO MAKE THE FRIEND REQUEST GO THROUGH */}
+        {/* <TextInput
+          placeholder="Friend ID"
+          onChangeText={(text) => setFriendID(text)}
+          value={friendId}
+        />
+        <Button
+          onPress={() => addFriend(user.uid, friendId)}
+          title="Add Friend!"
+        /> */}
       </View>
     </View>
     </ScrollView>

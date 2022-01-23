@@ -141,7 +141,7 @@ export async function findUsersByName(name){
     const snapshot = await getDocs(q);
     //console.log(snapshot.docs);
     const users = snapshot.docs.map(doc => doc.data());
-    console.log(users);
+    // console.log(users);
     return users;
   }
   catch(e){
