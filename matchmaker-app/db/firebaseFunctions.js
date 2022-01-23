@@ -188,17 +188,17 @@ export async function findUsersByName(name) {
   }
 }
 
-export async function getAllUsers(){
+export async function getAllUsers() {
   const userData = await getDocs(collection(db, "users"));
   return userData.docs.map((doc) => doc.data());
 }
 
-//pass in uid. friendUIDs is a list 
-export async function getNonFriendedUsers(uid, friendUIDs){ //need to pass in the list of people you've already requested
+//pass in uid. friendUIDs is a list
+export async function getNonFriendedUsers(uid, friendUIDs) {
+  //need to pass in the list of people you've already requested
   const allUsers = await getAllUsers();
   console.log("FRIENDS", friendUIDs);
-  const nonFriends = (allUsers.filter(
-    (user) => !friendUIDs.includes(user.uid)));
+  const nonFriends = allUsers.filter((user) => !friendUIDs.includes(user.uid));
   console.log("NONFRIENDS", nonFriends);
   return nonFriends;
 }
@@ -256,26 +256,51 @@ export async function denyMatch(uid, matchUid) {
   }
 }
 
-export async function acceptMatch(uid, matchUid) {
+export async function requestMatch(uid, matchUid) {
   try {
-    const batch = writeBatch(db);
+    await runTransaction(db, async (transaction) => {
+      const userRef = doc(db, "users", uid);
+      const userDoc = await transaction.get(userRef);
+      if (!userDoc.exists()) {
+        alert("Invalid profile!");
+        return;
+      }
+      const matchRequested = userDoc.data().matchRequested;
+      //if mutual match
+      if (matchRequested && matchRequested.includes(matchUid)) {
+        await acceptMatch(uid, matchUid, transaction);
+      } else {
+        transaction.update(userRef, {
+          matchRequested: arrayUnion(matchUid),
+          toSwipe: arrayRemove(matchUid),
+        });
+      }
+    });
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+export async function acceptMatch(uid, matchUid, transaction) {
+  try {
+    //const batch = writeBatch(db);
     const userRef = doc(db, "users", uid);
     //remove from swipe
-    batch.update(userRef, {
+    transaction.update(userRef, {
       toSwipe: arrayRemove(matchUid),
     });
 
     const newChatRef = doc(collection(db, "chats"));
-    batch.set(newChatRef, {
+    transaction.set(newChatRef, {
       participants: [uid, matchUid],
     });
     const newMsgRef = doc(collection(newChatRef, "messages"));
-    batch.set(newMsgRef, {
+    transaction.set(newMsgRef, {
       date: Timestamp.now(),
       text: "I matched with you, let's talk!",
       from: uid,
     });
-    await batch.commit();
+    //await batch.commit();
   } catch (err) {
     console.error(err);
   }
