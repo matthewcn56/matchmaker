@@ -105,9 +105,9 @@ export default function UserProfileScreen({ navigation }) {
           <Text style={[global.text2, { marginVertical: 15 }]}>
             Friend Requests
           </Text>
-          {displayedFriendRequests}
-
-          <TouchableOpacity
+          {displayedFriendRequests}         
+        </View>
+        <TouchableOpacity
             onPress={async () => {
               setPossibleFriends(await findUsersByName(searchValue));
               setSearchValue("");
@@ -118,8 +118,6 @@ export default function UserProfileScreen({ navigation }) {
           >
             <Text style={[global.text, {}]}>Find Friends </Text>
           </TouchableOpacity>
-          
-        </View>
       </View>
     </ScrollView>
   );
