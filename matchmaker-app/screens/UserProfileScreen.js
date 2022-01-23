@@ -36,7 +36,7 @@ export default function UserProfileScreen() {
       <View
         style={[
           global.container,
-          { marginHorizontal: -20, paddingVertical: 20 },
+          { marginHorizontal: -20, paddingVertical: 20, minHeight: 700, },
         ]}
       >
         <View style={styles.profileImageContainer}>
@@ -73,18 +73,20 @@ export default function UserProfileScreen() {
             onChangeText={(text) => setFriendName(text)}
             value={friendName}
           /> */}
-
-          <TouchableOpacity
-            onPress={async () => {
-              setPossibleFriends(await findUsersByName(friendName));
-              setFriendName("");
-              setModalVisible(true)
-            }}
-            title="Find User By Name"
-            style={global.button}
-          >
-            <Text style={[global.text, {}]}>Find Friends </Text>
-          </TouchableOpacity>
+          </View>
+          <View style={styles.buttonSection}>
+            <TouchableOpacity
+              onPress={async () => {
+                setPossibleFriends(await findUsersByName(friendName));
+                setFriendName("");
+                setModalVisible(true)
+              }}
+              title="Find User By Name"
+              style={[global.button]}
+            >
+              <Text style={[global.text]}>Find Friends </Text>
+            </TouchableOpacity>
+          
 
           {/* {console.log(possibleFriends)} */}
           {possibleFriends.map((friendObj, index) => {

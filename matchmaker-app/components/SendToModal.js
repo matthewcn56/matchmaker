@@ -20,7 +20,7 @@ export default function FriendModal(props) {
           props.setModalVisible(!props.modalVisible);
         }}>
         <View style={styles.centeredView}>
-            <Text style={global.text2}>Get Connected!</Text>
+            <Text style={global.text2}>Send to a Friend</Text>
             <TextInput
             style={[global.input, {width: 300, marginTop: 20, marginVertical: 20}]}
             placeholder="Search Name"

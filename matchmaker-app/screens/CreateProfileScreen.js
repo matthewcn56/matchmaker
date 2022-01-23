@@ -17,6 +17,7 @@ export default function CreateProfileScreen(){
     const [men, setMen] = useState(false);
     const [women, setWomen] = useState(false);
     const [nb, setNB] = useState(false);
+    const [gender, setGender] = useState(null)
 
     return(
         <View style={[global.containerNoCenter, {paddingLeft: 50}]}>
@@ -47,6 +48,64 @@ export default function CreateProfileScreen(){
             />
             {/* <Text>Value: {this.state.value}</Text> */}
             <Text style={[global.text3, styles.label]}>Gender</Text>
+            <View style={styles.section}>
+                <View  style={{
+                        borderType: 'solid',
+                        borderWidth: 1,
+                        margin: 5,
+                        borderColor: 'red',
+                        borderRadius: 30
+                    }}>
+                <Checkbox
+                    status={gender === "Man" ? 'checked' : 'unchecked'}
+                    onPress={() => {
+                      setGender("Man");
+                    }}
+                    style={{margin: 0}}
+                    color={'#EA393D'}
+                />
+                </View>
+                <Text style={[global.text3, styles.labelCheck]}>Man</Text>
+            </View>
+            <View style={styles.section}>
+                <View  style={{
+                        borderType: 'solid',
+                        borderWidth: 1,
+                        margin: 5,
+                        borderColor: 'red',
+                        borderRadius: 30
+                    }}>
+                <Checkbox
+                     status={gender === "Woman" ? 'checked' : 'unchecked'}
+                     onPress={() => {
+                       setGender("Woman");
+                     }}
+                    style={{margin: 0}}
+                    color={'#EA393D'}
+                />
+                </View>
+                <Text style={[global.text3, styles.labelCheck]}>Woman</Text>
+            </View>
+            <View style={styles.section}>
+                <View  style={{
+                        borderType: 'solid',
+                        borderWidth: 1,
+                        margin: 5,
+                        borderColor: 'red',
+                        borderRadius: 30
+                    }}>
+                <Checkbox
+                     status={gender === "NB" ? 'checked' : 'unchecked'}
+                     onPress={() => {
+                       setGender("NB");
+                     }}
+                    style={{margin: 0}}
+                    color={'#EA393D'}
+                />
+                </View>
+                <Text style={[global.text3, styles.labelCheck]}>Non-Binary</Text>
+            </View>
+
             <Text style={[global.text3, styles.label]}>Looking For</Text>
             <View style={styles.section}>
                 <View  style={{
