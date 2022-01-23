@@ -16,6 +16,7 @@ export default function Chat({ navigation }) {
           id: chat.id,
         });
       }}
+      chatData={chat}
     />
   ));
   return (

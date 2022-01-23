@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import global from "../styles.js";
 import { AuthContext } from "../navigation/AuthProvider.js";
@@ -8,15 +8,33 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import {
   acceptFriendRequest,
   denyFriendRequest,
+  getUserProfile,
 } from "../db/firebaseFunctions.js";
 
 export default function FriendRequest(props) {
+  const [userDisplay, setUserDisplay] = useState(null);
+  useEffect(() => {
+    const grabUser = async () => {
+      const result = await getUserProfile(props.uid);
+      setUserDisplay(result);
+    };
+    grabUser();
+  }, [props.uid]);
   const { user } = useContext(AuthContext);
   return (
     <View style={styles.smallContainer}>
       <View style={styles.row}>
-        <Image style={styles.img} source={img} />
-        <Text style={global.text3}>{props.uid}</Text>
+        <Image
+          style={styles.img}
+          source={
+            userDisplay && userDisplay.profilePic
+              ? { uri: userDisplay.profilePic }
+              : img
+          }
+        />
+        <Text style={global.text3}>
+          {userDisplay ? userDisplay.displayName : "getting user info..."}
+        </Text>
       </View>
       <View style={styles.row}>
         <TouchableOpacity
