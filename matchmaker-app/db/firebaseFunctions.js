@@ -188,6 +188,21 @@ export async function findUsersByName(name) {
   }
 }
 
+export async function getAllUsers(){
+  const userData = await getDocs(collection(db, "users"));
+  return userData.docs.map((doc) => doc.data());
+}
+
+//pass in uid. friendUIDs is a list 
+export async function getNonFriendedUsers(uid, friendUIDs){ //need to pass in the list of people you've already requested
+  const allUsers = await getAllUsers();
+  console.log("FRIENDS", friendUIDs);
+  const nonFriends = (allUsers.filter(
+    (user) => !friendUIDs.includes(user.uid)));
+  console.log("NONFRIENDS", nonFriends);
+  return nonFriends;
+}
+
 // sign in and sign out shenanigans
 export async function login() {
   try {

@@ -10,11 +10,13 @@ import {
   TextInput,
   Button,
 } from "react-native";
+
 import {
   addFriend,
   findUsersByName,
   acceptMatch,
   sendMsg,
+  getNonFriendedUsers
 } from "../db/firebaseFunctions";
 import FriendModal from "../components/FriendModal.js";
 
@@ -27,14 +29,44 @@ export default function UserProfileScreen() {
 
   const { user, logout, friendUids, incomingFriendRequestUids } =
     useContext(AuthContext);
-  const [friendId, setFriendID] = useState("");
-  const [friendName, setFriendName] = useState("");
+  // const [friendId, setFriendID] = useState("");
+  const [searchValue, setSearchValue] = useState("");
   const [possibleFriends, setPossibleFriends] = useState([]); //array of possible people you can friend
+
+  //set possible friends when first mounted
+  useEffect(()=> {
+    const grabPossibleFriends = async() => {
+      const possFriends = await getNonFriendedUsers(user.uid, friendUids); //TODO: also filter out users who you sent requests to but haven't responded
+      setPossibleFriends(possFriends); 
+    };
+    grabPossibleFriends();   
+  },[])
 
   const displayedFriendRequests = incomingFriendRequestUids.map((uid) => (
     <PersonSmall uid={uid} key={uid} />
   ));
-  possibleFriends.forEach((friend) => console.log(friend));
+
+  const renderPossibleFriends = () => {
+    let tempPossibleFriends = [...possibleFriends]; //copy possible friends
+    if (searchValue !== ""){
+      tempPossibleFriends = tempPossibleFriends.filter(
+        (friend) => friend.displayName.slice(0, searchValue.length).toLowerCase() === searchValue.toLowerCase() //TODO: add a tolower 
+      );
+    }
+    return tempPossibleFriends.map((friendObj, index) => 
+      <PossibleFriend 
+      friend={friendObj} 
+      onAccept={() => {
+        let newPossibleFriends = [
+          ...possibleFriends.slice(0, index),
+          ...possibleFriends.slice(index+1),
+        ]
+        setPossibleFriends(newPossibleFriends);
+      }}
+      />
+    )
+  }
+
   return (
     <ScrollView>
       <FriendModal
@@ -93,26 +125,9 @@ export default function UserProfileScreen() {
           >
             <Text style={[global.text, {}]}>Find Friends </Text>
           </TouchableOpacity>
-
-          {/* {console.log(possibleFriends)} */}
-          {possibleFriends.map((friendObj, index) => {
-            return (
-              <>
-                <PossibleFriend friend={friendObj} />
-              </>
-            );
-          })}
-
-          {/* LEGACY CODE TO MAKE THE FRIEND REQUEST GO THROUGH */}
-          {/* <TextInput
-          placeholder="Friend ID"
-          onChangeText={(text) => setFriendID(text)}
-          value={friendId}
-        />
-        <Button
-          onPress={() => addFriend(user.uid, friendId)}
-          title="Add Friend!"
-        /> */}
+ 
+          {renderPossibleFriends()}
+          
         </View>
       </View>
     </ScrollView>
