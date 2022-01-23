@@ -7,7 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
-  ScrollView
+  ScrollView,
 } from "react-native";
 import { AuthContext } from "../navigation/AuthProvider";
 
@@ -33,7 +33,7 @@ export default function CreateProfileScreen() {
           />
           <TextInput
             placeholder="Age"
-            value={userInfo.age}
+            value={String(userInfo.age)}
             onChangeText={(event) =>
               dispatchUserInfo({ type: "age", body: event })
             }
