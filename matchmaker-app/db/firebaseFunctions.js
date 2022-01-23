@@ -258,21 +258,25 @@ export async function denyMatch(uid, matchUid) {
 
 export async function requestMatch(uid, matchUid) {
   try {
+    //let mutual = false;
     await runTransaction(db, async (transaction) => {
+      const matchRef = doc(db, "users", matchUid);
       const userRef = doc(db, "users", uid);
-      const userDoc = await transaction.get(userRef);
-      if (!userDoc.exists()) {
+      const matchDoc = await transaction.get(matchRef);
+      if (!matchDoc.exists()) {
         alert("Invalid profile!");
         return;
       }
-      const matchRequested = userDoc.data().matchRequested;
+      const matchRequested = matchDoc.data().matchRequested;
+      //console.log(matchRequested);
       //if mutual match
-      if (matchRequested && matchRequested.includes(matchUid)) {
+      if (matchRequested && matchRequested.includes(uid)) {
+        console.log("Match!");
         await acceptMatch(uid, matchUid, transaction);
       } else {
         transaction.update(userRef, {
           matchRequested: arrayUnion(matchUid),
-          toSwipe: arrayRemove(matchUid),
+          toSwipe: arrayUnion(matchUid),
         });
       }
     });
@@ -288,6 +292,14 @@ export async function acceptMatch(uid, matchUid, transaction) {
     //remove from swipe
     transaction.update(userRef, {
       toSwipe: arrayRemove(matchUid),
+      matchRequested: arrayRemove(matchUid),
+    });
+
+    const complementRef = doc(db, "users", matchUid);
+    //remove from swipe
+    transaction.update(complementRef, {
+      toSwipe: arrayRemove(uid),
+      matchRequested: arrayRemove(uid),
     });
 
     const newChatRef = doc(collection(db, "chats"));
