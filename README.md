@@ -7,9 +7,9 @@ One of our favorite pasttimes as a friend group is swiping on each other's datin
 ## What it does
 
 ### User
-When the user lands, they are led to a profile set up page. Here they can specify their personal information and who they are looking for on the app.
+First, the user logs in with Google authentication. If the user is new to the app, they are led to a profile set up page. Here they can specify their personal information and who they are looking for on the app.
 
-From there, the user's profile page shows any friend requests the user has. 
+For a revisiting user, their profile is visible once they log back on to the app. A user's profile page shows any friend requests the user has. 
 
 They can also find friends by searching by display name. The search algorithm updates the suggested users shown as soon as the user types another letter in their query.
 
