@@ -14,7 +14,12 @@ export default function ChatPerson(props) {
       }}
     >
       <View style={styles.smallContainer}>
-        <Image style={styles.img} source={require("../assets/temp.png")} />
+        <Image
+          style={styles.img}
+          source={
+            props.url ? { uri: props.url } : require("../assets/temp.png")
+          }
+        />
         <View>
           <Text
             numberOfLines={1}
@@ -28,7 +33,7 @@ export default function ChatPerson(props) {
               },
             ]}
           >
-            Name
+            {props.name}
           </Text>
           <Text numberOfLines={1} style={[global.text3, styles.lastMessage]}>
             {props.chatData.messages[props.chatData.messages.length - 1].text}

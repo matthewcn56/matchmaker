@@ -11,11 +11,17 @@ export default function ChatStackScreen() {
       <ChatStack.Screen
         name="ChatHome"
         component={Chat}
-        screenOptions={{
+        options={{
           headerShown: false,
         }}
       />
-      <ChatStack.Screen name="DM" component={DirectMessage} />
+      <ChatStack.Screen
+        name="DM"
+        component={DirectMessage}
+        options={{
+          headerShown: false,
+        }}
+      />
     </ChatStack.Navigator>
   );
 }

@@ -35,7 +35,7 @@ export default function DirectMessage(props) {
   const other = require("../assets/temp.png");
   const me = require("../assets/temp.png");
   const { chats, user } = useContext(AuthContext);
-  const { id, chatData } = props.route.params;
+  const { id, chatData, name, url } = props.route.params;
   const [msgInput, setMsgInput] = useState("");
 
   let messages = [];
@@ -65,9 +65,9 @@ export default function DirectMessage(props) {
       }}
     >
       {/* <View style={styles.profileImageContainer}> */}
-      <Image style={styles.profileImage} source={other} />
+      <Image style={styles.profileImage} source={url ? { uri: url } : other} />
       <Text style={[global.text2, { alignSelf: "center", marginBottom: 20 }]}>
-        Name
+        {name}
       </Text>
       {/* </View> */}
 
