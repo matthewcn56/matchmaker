@@ -51,18 +51,18 @@ export default function UserProfileScreen() {
         />
 
         <Button
-          onPress={async () => {setPossibleFriends(await findUsersByName("albert"))}}
+          onPress={async () => {setPossibleFriends(await findUsersByName(friendName)); setFriendName("");}}
           title="Find User By Name"
         />
 
-        {console.log(possibleFriends)}
-        {/* {possibleFriends.map((friend, index) => {
+        {/* {console.log(possibleFriends)} */}
+        {possibleFriends.map((friend, index) => {
           return (
             <>
               <Text>{friend.displayName}</Text>
             </>
           );
-        })} */}
+        })}
 
         {/* LEGACY CODE TO MAKE THE FRIEND REQUEST GO THROUGH */}
         {/* <TextInput

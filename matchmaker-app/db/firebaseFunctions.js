@@ -160,12 +160,12 @@ export async function acceptFriendRequest(uid, incomingUid) {
 
 export async function findUsersByName(name) {
   //console.log(name);
-  const q = query(collection(db, "users"), where("name", "==", name));
+  const q = query(collection(db, "users"), where("displayName", "==", name)); //TODO: figure out why queury finds nothing now
   try {
     const snapshot = await getDocs(q);
     //console.log(snapshot.docs);
     const users = snapshot.docs.map(doc => doc.data());
-    // console.log(users);
+    console.log("Users is: ", users); //debug
     return users;
   } catch (e) {
     console.error(e);
