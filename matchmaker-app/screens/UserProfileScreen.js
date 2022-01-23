@@ -16,11 +16,16 @@ import PersonSmall from "../components/FriendRequest";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function UserProfileScreen() {
-  const { user, logout } = useContext(AuthContext);
+  const { user, logout, friendUids, incomingFriendRequestUids } =
+    useContext(AuthContext);
   const [friendId, setFriendID] = useState("");
   const [friendName, setFriendName] = useState("");
   const [possibleFriends, setPossibleFriends] = useState([]); //array of possible people you can friend
 
+  const displayedFriendRequests = incomingFriendRequestUids.map((uid) => (
+    <PersonSmall uid={uid} />
+  ));
+  possibleFriends.forEach((friend) => console.log(friend));
   return (
     <ScrollView>
       <View
@@ -53,10 +58,7 @@ export default function UserProfileScreen() {
           <Text style={[global.text2, { marginVertical: 15 }]}>
             Friend Requests
           </Text>
-          <PersonSmall></PersonSmall>
-          <PersonSmall></PersonSmall>
-          <PersonSmall></PersonSmall>
-          <PersonSmall></PersonSmall>
+          {displayedFriendRequests}
           <Text style={[global.text2, { marginVertical: 15 }]}>
             Find Friends
           </Text>
@@ -74,7 +76,6 @@ export default function UserProfileScreen() {
             title="Find User By Name"
           />
 
-          {console.log(possibleFriends)}
           {/* {possibleFriends.map((friend, index) => {
           return (
             <>

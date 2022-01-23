@@ -4,6 +4,10 @@ import { useState } from "react";
 export const AuthContext = createContext({});
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [incomingFriendRequestUids, setIncomingFriendRequestUids] = useState(
+    []
+  );
+  const [friendUids, setFriendUids] = useState([]);
   return (
     <AuthContext.Provider
       value={{
@@ -11,6 +15,10 @@ export const AuthProvider = ({ children }) => {
         setUser,
         login: login,
         logout: logout,
+        incomingFriendRequestUids,
+        setIncomingFriendRequestUids,
+        friendUids,
+        setFriendUids,
       }}
     >
       {children}

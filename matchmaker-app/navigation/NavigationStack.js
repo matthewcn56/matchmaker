@@ -7,15 +7,42 @@ import { AuthContext } from "./AuthProvider";
 import { ActivityIndicator } from "react-native";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
-import { getDoc, doc } from "firebase/firestore";
+import { getDoc, doc, onSnapshot, collection } from "firebase/firestore";
 import { db } from "../db/firebaseFunctions";
 
 export default function NavigationStack() {
-  const { user, setUser } = useContext(AuthContext);
+  const { user, setUser, setFriendUids, setIncomingFriendRequestUids } =
+    useContext(AuthContext);
   const [initializing, setInitializing] = useState(true);
   const [loading, setLoading] = useState(true);
 
-  //handle user state changes
+  //set up firebase listener for user doc if exists
+  useEffect(() => {
+    //do nothing if no user
+    if (!user) {
+      setFriendUids([]);
+      setIncomingFriendRequestUids([]);
+      return;
+    }
+    const userUnsubscribe = onSnapshot(
+      doc(db, "users", user.uid),
+      (userDocument) => {
+        const userDocData = userDocument.data();
+        const friendDocData = userDocData.friends ?? [];
+        const friendRequestData = userDocData.friendRequests ?? [];
+        setFriendUids(friendDocData);
+        setIncomingFriendRequestUids(friendRequestData);
+      }
+    );
+    console.log("set up doc listener!");
+    return () => {
+      if (userUnsubscribe) {
+        console.log("Detaching listener");
+        userUnsubscribe();
+      }
+    };
+  }, [user]);
+
   useEffect(() => {
     const subscriber = firebase.auth().onAuthStateChanged(function (user) {
       // setUser(user);
@@ -36,7 +63,11 @@ export default function NavigationStack() {
             console.log(userSnapshot.data());
             setUser(userSnapshot.data());
           } else {
-            setUser(user);
+            setUser({
+              displayName: user.displayName,
+              profilePic: user.photoURL,
+              uid: user.uid,
+            });
           }
           if (initializing) setInitializing(false);
           setLoading(false);
