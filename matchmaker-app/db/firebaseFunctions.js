@@ -10,8 +10,14 @@ import {
   setDoc,
   updateDoc,
   writeBatch,
+<<<<<<< HEAD
   query,
   getDocs,
+=======
+  getDocs,
+  query,
+  where,
+>>>>>>> 885ff1a69f5463de1408435bdb4fbd0d9d06d339
 } from "firebase/firestore";
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
@@ -154,6 +160,23 @@ export async function addFriend(uid, friendUid) {
   }
 }
 
+export async function findUsersByName(name){
+  //console.log(name);
+  const q = query(collection(db, "users"), where("name", "==", name));
+  try{
+    const snapshot = await getDocs(q);
+    //console.log(snapshot.docs);
+    const users = snapshot.docs.map(doc => doc.data());
+    console.log(users);
+    return users;
+  }
+  catch(e){
+    console.error(e);
+  }
+
+}
+
+// sign in and sign out shenanigans
 export async function login() {
   try {
     const result = await Google.logInAsync({
