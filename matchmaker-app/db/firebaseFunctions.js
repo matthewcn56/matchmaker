@@ -13,10 +13,11 @@ import {
   getDocs,
   query,
   where,
+  arrayUnion,
+  arrayRemove,
 } from "firebase/firestore";
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
-import BatchedBridge from "react-native/Libraries/BatchedBridge/BatchedBridge";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
@@ -116,38 +117,59 @@ export function updateProfile(newInfo, uid) {
   });
 }
 
-export async function addFriend(uid, friendUid) {
+export async function getUserChats(uid) {
+  const userQuery = query(
+    collection(db, "chats"),
+    where("users", "array-contains", uid)
+  );
+  const queryResult = await getDocs(userQuery);
+  const messagesWith = queryResult.docs.map((chat) => ({
+    ...chat.data(),
+    id: chat.id,
+  }));
+  return messagesWith;
+}
+
+export async function makeChatMsg(chatID, uid, msg) {
+  const chatRef = doc(db, "chats", chatID);
+  setDoc(chatRef, {
+    date: Date.now(),
+    msg: msg,
+    from: uid,
+  });
+}
+
+export async function acceptFriendRequest(uid, incomingUid) {
   try {
     const friendBatch = writeBatch(db);
-    const friendRef = doc(db, "users", uid, "friends", friendUid);
-    friendBatch.set(friendRef, {
-      uid: friendUid,
+    const selfRef = doc(db, "users", uid);
+    friendBatch.update(selfRef, {
+      friends: arrayUnion(incomingUid),
+      friendRequests: arrayRemove(incomingUid),
     });
-    const complementRef = doc(db, "users", friendUid, "friends", uid);
-    friendBatch.set(complementRef, {
-      uid: uid,
+    const complementRef = doc(db, "users", incomingUid);
+    friendBatch.update(complementRef, {
+      friends: arrayUnion(uid),
     });
     await friendBatch.commit();
-    console.log("Added friend successfully!");
+    alert("Friend request sent successfully!");
   } catch (err) {
     console.error(err);
   }
 }
 
-export async function findUsersByName(name){
+export async function findUsersByName(name) {
   //console.log(name);
   const q = query(collection(db, "users"), where("name", "==", name));
-  try{
+  try {
     const snapshot = await getDocs(q);
     //console.log(snapshot.docs);
     const users = snapshot.docs.map(doc => doc.data());
     // console.log(users);
     return users;
-  }
-  catch(e){
+  } catch (e) {
     console.error(e);
   }
-
 }
 
 // sign in and sign out shenanigans
@@ -168,6 +190,17 @@ export async function login() {
     }
   } catch (e) {
     console.log("error");
+  }
+}
+
+export async function sendFriendRequest(uid, friendUid) {
+  try {
+    await updateDoc(doc(db, "users", friendUid), {
+      friendRequests: arrayUnion(uid),
+    });
+    alert("Sent friend request!");
+  } catch (err) {
+    console.error("Error sending fr", err);
   }
 }
 
