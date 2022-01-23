@@ -87,12 +87,8 @@ export default function UserProfileScreen() {
         <Button
           onPress={() => addFriend(user.uid, friendId)}
           title="Add Friend!"
-<<<<<<< HEAD
-        />
-=======
         /> */}
         </View>
->>>>>>> b0abb9d3dec170774bb328d5e03aafd7e1fa0f21
       </View>
     </ScrollView>
   );
