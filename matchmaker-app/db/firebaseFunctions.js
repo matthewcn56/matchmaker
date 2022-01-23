@@ -181,7 +181,7 @@ export async function findUsersByName(name) {
     const snapshot = await getDocs(q);
     //console.log(snapshot.docs);
     const users = snapshot.docs.map((doc) => doc.data());
-    console.log("Users is: ", users); //debug
+    // console.log("Users is: ", users); //debug
     return users;
   } catch (e) {
     console.error(e);
@@ -197,9 +197,7 @@ export async function getAllUsers() {
 export async function getNonFriendedUsers(uid, friendUIDs) {
   //need to pass in the list of people you've already requested
   const allUsers = await getAllUsers();
-  console.log("FRIENDS", friendUIDs);
   const nonFriends = allUsers.filter((user) => !friendUIDs.includes(user.uid));
-  console.log("NONFRIENDS", nonFriends);
   return nonFriends;
 }
 
@@ -341,6 +339,16 @@ export async function getAllFriends(uid) {
 export async function getUserProfile(uid) {
   const userRef = doc(db, "users", uid);
   const userSnap = await getDoc(userRef);
+  if (userSnap.exists()) {
+    return userSnap.data();
+  } else {
+    alert("User doesn't exist!");
+  }
+}
+
+export async function getUserProfileTransaction(uid, transaction) {
+  const userRef = doc(db, "users", uid);
+  const userSnap = await transaction.get(userRef);
   if (userSnap.exists()) {
     return userSnap.data();
   } else {
