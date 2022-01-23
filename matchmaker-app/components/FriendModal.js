@@ -64,18 +64,16 @@ export default function FriendModal(props) {
         }}>
         <View style={styles.centeredView}>
             <Text style={global.text2}>Get Connected!</Text>
+            <Text style={global.text4}>tap the check to send a friend request</Text>
             <TextInput
             style={[global.input, {width: 300, marginTop: 20, marginVertical: 20}]}
-            placeholder="Search Name"
-            // onChangeText={(text) => setFriendName(text)}
-            // value={friendName}
-            />
+            placeholder="Search Name" 
+            onChangeText={(text) => setSearchValue(text)}
+            value={searchValue}
+            /> 
+            {/* TODO: placeholder isn't showing for some reason */}
 
             {renderPossibleFriends()}
-            {/* <PossibleFriend setModalVisible={props.setModalVisible}></PossibleFriend>
-            <PossibleFriend setModalVisible={props.setModalVisible}></PossibleFriend>
-            <PossibleFriend setModalVisible={props.setModalVisible}></PossibleFriend>
-            <PossibleFriend setModalVisible={props.setModalVisible}></PossibleFriend> */}
 
             <Pressable
               style={global.button}

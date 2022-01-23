@@ -23,6 +23,11 @@ export default function PossibleFriend(props) {
                     <View>
                         <Text numberOfLines={1} style={[global.text3, {marginTop: 10}]}></Text>
                         <Text>{props.friend.displayName}</Text>
+
+                        {/* TODO: there is probably a nicer way to do the UI for a send request */}
+                        <TouchableOpacity onPress={() => {sendFriendRequest(user.uid, props.friend.uid); props.onAccept();}}>
+                            <Entypo name="check" size={25} color="#2F2F2F" />
+                        </TouchableOpacity>
                     </View>
                     
                 </View>
