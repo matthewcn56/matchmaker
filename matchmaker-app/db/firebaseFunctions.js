@@ -186,6 +186,21 @@ export async function findUsersByName(name) {
   }
 }
 
+export async function getAllUsers(){
+  const userData = await getDocs(collection(db, "users"));
+  return userData.docs.map((doc) => doc.data());
+}
+
+//pass in uid. friendUIDs is a list 
+export async function getNonFriendedUsers(uid, friendUIDs){ //need to pass in the list of people you've already requested
+  const allUsers = await getAllUsers();
+  console.log("FRIENDS", friendUIDs);
+  const nonFriends = (allUsers.filter(
+    (UID) => !friendUIDs.includes(UID)
+  ));
+  return nonFriends;
+}
+
 // sign in and sign out shenanigans
 export async function login() {
   try {
@@ -254,7 +269,7 @@ export async function acceptMatch(uid, matchUid) {
       participants: [uid, matchUid],
     });
     const newMsgId = doc(collection(db, "chats", newChatRef, "messages"));
-    const newMsgRef = doc(db, "chats", newChatRef, "messages", newMsgId);
+    const newMsgRef = doc(db, "chats", newChatRef, "messages",newMsgId);
     batch.set(newMsgRef, {
       date: Timestamp.now(),
       text: "I matched with you, let's talk!",
