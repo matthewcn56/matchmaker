@@ -28,7 +28,7 @@ export default function Profile(props) {
       index={0}
       data={images}
       renderItem={({ item }) => {
-        console.log(item)
+        // console.log(item)
         return(
         <View style={[styles.child, { backgroundColor: item }]}>
           {/* <Text style={styles.text}>{item}</Text> */}
