@@ -14,6 +14,7 @@ import { addFriend, findUsersByName } from "../db/firebaseFunctions";
 
 import PersonSmall from "../components/FriendRequest";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import PossibleFriend from "../components/PossibleFriend";
 
 export default function UserProfileScreen() {
   const { user, logout, friendUids, incomingFriendRequestUids } =
@@ -62,20 +63,26 @@ export default function UserProfileScreen() {
           <Text style={[global.text2, { marginVertical: 15 }]}>
             Find Friends
           </Text>
+          
+          <TextInput
+            placeholder="Search Name"
+            onChangeText={(text) => setFriendName(text)}
+            value={friendName}
+          />
 
-        <Button
-          onPress={async () => {setPossibleFriends(await findUsersByName(friendName)); setFriendName("");}}
-          title="Find User By Name"
-        />
+          <Button
+            onPress={async () => {setPossibleFriends(await findUsersByName(friendName)); setFriendName("");}}
+            title="Find User By Name"
+          />
 
-        {/* {console.log(possibleFriends)} */}
-        {possibleFriends.map((friend, index) => {
-          return (
-            <>
-              <Text>{friend.displayName}</Text>
-            </>
-          );
-        })}
+          {/* {console.log(possibleFriends)} */}
+          {possibleFriends.map((friendObj, index) => {
+            return (
+              <>
+                <PossibleFriend friend={friendObj}/>
+              </>
+            );
+          })}
 
           {/* LEGACY CODE TO MAKE THE FRIEND REQUEST GO THROUGH */}
           {/* <TextInput
