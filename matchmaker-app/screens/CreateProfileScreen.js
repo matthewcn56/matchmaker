@@ -1,4 +1,4 @@
-import React, { useReducer, useContext } from "react";
+import React, { useReducer, useContext, useState } from "react";
 import global from "../styles.js";
 import { updateProfile } from "../db/firebaseFunctions.js";
 import {
@@ -7,6 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  ScrollView
 } from "react-native";
 import { AuthContext } from "../navigation/AuthProvider";
 

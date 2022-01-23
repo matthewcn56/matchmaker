@@ -4,9 +4,9 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import global from "../styles.js";
 import img from "../assets/temp.png";
 
-export default function ChatPerson() {
+export default function ChatPerson(props) {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => {props.press()}}>
       <View style={styles.smallContainer}>
         <Image style={styles.img} source={img} />
         <View>

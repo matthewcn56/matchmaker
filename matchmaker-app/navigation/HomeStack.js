@@ -6,7 +6,7 @@ import ExtraScreen from "../screens/ExtraScreen";
 import UserProfileScreen from "../screens/UserProfileScreen";
 import CreateProfileScreen from "../screens/CreateProfileScreen";
 import Chat from "../screens/Chat";
-import { ChatStackScreen } from "./ChatStack.js";
+import ChatStackScreen  from "./ChatStack.js";
 
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
@@ -59,7 +59,7 @@ export default function HomeStack() {
         />
         <Tab.Screen
           name="Chat"
-          component={Chat} //THIS NEEDS TO BE CHILDREN INSTEAD OF COMPONENT FOR SOME REASON ASK MATT
+          component={ChatStackScreen} 
           options={{
             tabBarIcon: () => (
               <Ionicons name="chatbubble" color={"#EA393D"} size={24} />
