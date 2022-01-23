@@ -29,7 +29,7 @@ The Matchmake page is the heart of our application. Here you can scroll through 
 </div>
 
 ### Swipe your recommendations
-Once your friends have . If both people "swipe right", a match is made!
+Once your friends have recommended people to you. If both people "swipe right", a match is made!
 <div>
 <img src="https://cdn.discordapp.com/attachments/934346810644897853/934836636871720981/IMG_3955.PNG" width="200"/>
 </div>
