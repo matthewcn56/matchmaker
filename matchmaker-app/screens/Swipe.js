@@ -5,33 +5,62 @@ import { Entypo } from "@expo/vector-icons";
 
 import Profile from "../components/Profile.js";
 import { AuthContext } from "../navigation/AuthProvider.js";
-import { denyMatch, getUserProfile, requestMatch } from "../db/firebaseFunctions.js";
+import {
+  denyMatch,
+  getUserProfile,
+  requestMatch,
+} from "../db/firebaseFunctions.js";
 
 export default function Swipe() {
-  const [allProfiles, setAllProfiles] = useState([]);
   const { user, toSwipe } = useContext(AuthContext);
   console.log(toSwipe);
+  const [allProfiles, setAllProfiles] = useState([]);
   useEffect(() => {
     const grabProfiles = async () => {
-      const profiles = toSwipe.map(async (uid) => await getUserProfile(uid));
-      const profilesData = await Promise.all(profiles);
-      setAllProfiles(profilesData);
+      const newPeople = await Promise.all(
+        toSwipe.map(async (swipe) => {
+          const personUid = swipe;
+          const person = await getUserProfile(personUid);
+          console.log(person);
+          console.log("SWIPE", person);
+          return <Profile profile={person} key={person.uid} />;
+        })
+      );
+      setAllProfiles(newPeople);
+    };
+
+    if (toSwipe.length < 1) {
+      return;
     }
-    if (toSwipe.length >0){
-      grabProfiles();
-    }
+    grabProfiles();
   }, [toSwipe]);
-  const displayedProfile = allProfiles[toSwipe.length - 1];
+  // useEffect(() => {
+  //   const grabProfiles = async () => {
+  //     const profiles = toSwipe.map(async (uid) => await getUserProfile(uid));
+  //     const profilesData = await Promise.all(profiles);
+  //     console.log("PROFILE DATA", profilesData);
+  //     setAllProfiles(profilesData);
+  //   };
+  //   if (toSwipe.length > 0) {
+  //     console.log("GRABBING STUFF");
+  //     grabProfiles();
+  //   }
+  // }, [toSwipe]);
+  console.log("ALL PROFILES");
+  console.log(allProfiles);
+  const displayedProfile = allProfiles[toSwipe.length - 1].props.profile;
+  console.log("DISPLAYED PROFILES", displayedProfile);
   const displayedUid = toSwipe[toSwipe.length - 1];
   return (
     <View style={[global.container, { paddingVertical: 50 }]}>
       {/* <Text>swipe on your ships</Text> */}
-      {toSwipe.length != 0 ? (
+      {toSwipe.length != 0 && displayedProfile ? (
         <View style={[styles.row, { marginTop: 20 }]}>
           <Profile
             key={displayedProfile.uid}
             profile={displayedProfile}
-            />
+            swipe={true}
+          />
           <TouchableOpacity
             style={styles.reqButton}
             onPress={() => {
@@ -48,7 +77,9 @@ export default function Swipe() {
             <Entypo name="check" size={55} color="#2F2F2F" />
           </TouchableOpacity>
         </View>
-      ) : "No more profiles"}
+      ) : (
+        <Text>No more profiles</Text>
+      )}
     </View>
   );
 }

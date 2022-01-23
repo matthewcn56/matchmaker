@@ -59,7 +59,8 @@ export default function Profile(props) {
         <View style={{ flexShrink: 1, flexBasis: 300 }}>
           <View style={{ flexDirection: "row" }}>
             <Text style={global.text2}>
-              {props.profile.displayName} • {props.profile.age ?? "No Age"}
+              {props.profile && props.profile.displayName} •{" "}
+              {props.profile.age ?? "No Age"}
             </Text>
           </View>
           <Text style={global.text3}>
