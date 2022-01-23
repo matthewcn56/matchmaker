@@ -5,6 +5,7 @@ import HomeScreen from "../screens/HomeScreen";
 import Swipe from "../screens/Swipe";
 import UserProfileScreen from "../screens/UserProfileScreen";
 import CreateProfileScreen from "../screens/CreateProfileScreen";
+import ProfileStack from "../navigation/ProfileStack.js"
 import Chat from "../screens/Chat";
 import ChatStackScreen  from "./ChatStack.js";
 
@@ -27,7 +28,7 @@ export default function HomeStack() {
       >
         <Tab.Screen
           name="UserProfile"
-          component={UserProfileScreen}
+          component={ProfileStack}
           options={{
             tabBarIcon: () => (
               <FontAwesome name="user" color={"#EA393D"} size={24} />
