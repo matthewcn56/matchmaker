@@ -6,12 +6,12 @@ import img from "../assets/temp.png";
 import { Entypo } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-export default function FriendRequest() {
+export default function FriendRequest(props) {
   return (
     <View style={styles.smallContainer}>
       <View style={styles.row}>
         <Image style={styles.img} source={img} />
-        <Text style={global.text3}>Name</Text>
+        <Text style={global.text3}>{props.uid}</Text>
       </View>
       <View style={styles.row}>
         <TouchableOpacity>
