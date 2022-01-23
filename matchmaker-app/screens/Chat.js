@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React from "react";
+=======
+import React, { useState } from "react";
+>>>>>>> fb-chat
 import styles from "../styles.js";
 import { ScrollView, Text, View } from "react-native";
 

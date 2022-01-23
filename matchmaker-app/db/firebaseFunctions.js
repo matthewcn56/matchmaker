@@ -10,10 +10,11 @@ import {
   setDoc,
   updateDoc,
   writeBatch,
+  query,
+  getDocs,
 } from "firebase/firestore";
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
-import BatchedBridge from "react-native/Libraries/BatchedBridge/BatchedBridge";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
@@ -110,6 +111,28 @@ export function updateProfile(newInfo, uid) {
   updateDoc(profileRef, {
     ...newInfo,
     uid: uid,
+  });
+}
+
+export async function getUserChats(uid) {
+  const userQuery = query(
+    collection(db, "chats"),
+    where("users", "array-contains", uid)
+  );
+  const queryResult = await getDocs(userQuery);
+  const messagesWith = queryResult.docs.map((chat) => ({
+    ...chat.data(),
+    id: chat.id,
+  }));
+  return messagesWith;
+}
+
+export async function makeChatMsg(chatID, uid, msg) {
+  const chatRef = doc(db, "chats", chatID);
+  setDoc(chatRef, {
+    date: Date.now(),
+    msg: msg,
+    from: uid,
   });
 }
 
