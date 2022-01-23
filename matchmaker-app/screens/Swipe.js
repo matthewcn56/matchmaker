@@ -48,7 +48,9 @@ export default function Swipe() {
   // }, [toSwipe]);
   console.log("ALL PROFILES");
   console.log(allProfiles);
-  const displayedProfile = allProfiles[toSwipe.length - 1].props.profile;
+  let displayedProfile;
+  if (allProfiles)
+    displayedProfile = allProfiles[toSwipe.length - 1].props.profile;
   console.log("DISPLAYED PROFILES", displayedProfile);
   const displayedUid = toSwipe[toSwipe.length - 1];
   return (
